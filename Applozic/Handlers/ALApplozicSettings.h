@@ -103,6 +103,9 @@
 static NSString *const HIDE_MESSAGES_WITH_METADATA_KEYS = @"com.applozic.HIDE_MESSAGES_WITH_METADATA_KEYS";
 static NSString *const ALDisableMultiSelectGalleryView = @"ALDisableMultiSelectGalleryView";
 
+#define TABBAR_BACKGROUND_COLOUR @"com.applozic.userdefault.TABBAR_BACKGROUND_COLOUR"
+#define ADD_CONTACT_NOTIFICATION @"com.applozic.userdefault.ADD_CONTACT_NOTIFICATION"
+
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
@@ -428,4 +431,9 @@ static NSString *const ALDisableMultiSelectGalleryView = @"ALDisableMultiSelectG
 
 +(BOOL)isMultiSelectGalleryViewDisabled;
 +(void)disableMultiSelectGalleryView:(BOOL)enabled;
++(UIColor *) getTabBarBackgroundColour;
++(void) setTabBarBackgroundColour:(UIColor *)color;
+
++(NSString*) getAddContactNotificationName;
++(void) setAddContactNotificationName:(NSString*) name;
 @end

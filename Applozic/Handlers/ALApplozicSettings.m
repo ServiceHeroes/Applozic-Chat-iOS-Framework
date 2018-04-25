@@ -1219,4 +1219,28 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
+
+
++(UIColor *) getTabBarBackgroundColour{
+    NSData *colorData = [[NSUserDefaults standardUserDefaults] objectForKey:TABBAR_BACKGROUND_COLOUR];
+    UIColor *color = [NSKeyedUnarchiver unarchiveObjectWithData:colorData];
+    return color ? color : [UIColor colorWithRed:247.0/255 green:247.0/255 blue:247.0/255 alpha:0.5];
+}
+
++(void) setTabBarBackgroundColour:(UIColor *)color{
+    NSData * colorData = [NSKeyedArchiver archivedDataWithRootObject:color];
+    [[NSUserDefaults standardUserDefaults] setObject:colorData forKey:TABBAR_BACKGROUND_COLOUR];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++(NSString*) getAddContactNotificationName{
+    return [[NSUserDefaults standardUserDefaults] valueForKey:ADD_CONTACT_NOTIFICATION];
+    
+}
+
++(void) setAddContactNotificationName:(NSString*) name{
+    [[NSUserDefaults standardUserDefaults] setValue:name forKey:ADD_CONTACT_NOTIFICATION];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
 @end

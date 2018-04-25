@@ -272,6 +272,8 @@
     {
         [self noDataNotificationView];
     }
+    
+    [self loadMessages:nil];
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -325,23 +327,30 @@
 
 -(IBAction)navigationRightButtonAction:(id)sender
 {
-    UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Applozic" bundle:[NSBundle bundleForClass:ALChatViewController.class]];
-    ALNewContactsViewController *contactVC = (ALNewContactsViewController *)[storyboard instantiateViewControllerWithIdentifier:@"ALNewContactsViewController"];
-    contactVC.forGroup = [NSNumber numberWithInt:REGULAR_CONTACTS];
-    if([ALApplozicSettings isContactsGroupEnabled ] && _contactsGroupId)
-    {
-        [ALApplozicSettings setContactsGroupId:_contactsGroupId];
+    NSString* notificationName = [ALApplozicSettings getAddContactNotificationName];
+    
+    if(notificationName == nil){
+        UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Applozic" bundle:[NSBundle bundleForClass:ALChatViewController.class]];
+        ALNewContactsViewController *contactVC = (ALNewContactsViewController *)[storyboard instantiateViewControllerWithIdentifier:@"ALNewContactsViewController"];
+        contactVC.forGroup = [NSNumber numberWithInt:REGULAR_CONTACTS];
+        if([ALApplozicSettings isContactsGroupEnabled ] && _contactsGroupId)
+        {
+            [ALApplozicSettings setContactsGroupId:_contactsGroupId];
+        }
+        
+        if(self.parentGroupKey && [ALApplozicSettings getSubGroupLaunchFlag])
+        {
+            contactVC.forGroup = [NSNumber numberWithInt:LAUNCH_GROUP_OF_TWO];
+            ALChannelService * channelService = [ALChannelService new];
+            contactVC.parentChannel = [channelService getChannelByKey:self.parentGroupKey];
+            contactVC.childChannels = [[NSMutableArray alloc] initWithArray:[channelService fetchChildChannelsWithParentKey:self.parentGroupKey]];
+        }
+        [self.navigationController pushViewController:contactVC animated:YES];
+        return;
     }
     
-    if(self.parentGroupKey && [ALApplozicSettings getSubGroupLaunchFlag])
-    {
-        contactVC.forGroup = [NSNumber numberWithInt:LAUNCH_GROUP_OF_TWO];
-        ALChannelService * channelService = [ALChannelService new];
-        contactVC.parentChannel = [channelService getChannelByKey:self.parentGroupKey];
-        contactVC.childChannels = [[NSMutableArray alloc] initWithArray:[channelService fetchChildChannelsWithParentKey:self.parentGroupKey]];
-    }
-    
-    [self.navigationController pushViewController:contactVC animated:YES];
+    [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:self.navigationController];
+
 }
 
 /************************************  REFRESH CONVERSATION IF RIGHT BUTTON IS REFRESH BUTTON **************************************************/
