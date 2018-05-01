@@ -1176,6 +1176,9 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
     
 }
+/**
+ SERVICE HEREOES CODE
+**/
 
 +(NSString*)getCategoryName{
     return [[NSUserDefaults standardUserDefaults] valueForKey:AL_CATEGORY_NAME];
@@ -1441,9 +1444,131 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
+
++(UIColor *) getTabBarSelectedItemColour{
+    NSData *colorData = [[NSUserDefaults standardUserDefaults] objectForKey:TABBAR_SELECTED_ITEM_COLOUR];
+    UIColor *color = [NSKeyedUnarchiver unarchiveObjectWithData:colorData];
+    return color ? color : [UIColor blueColor];
+}
+
++(void) setTabBarSelectedItemColour:(UIColor *)color{
+    NSData * colorData = [NSKeyedArchiver archivedDataWithRootObject:color];
+    [[NSUserDefaults standardUserDefaults] setObject:colorData forKey:TABBAR_SELECTED_ITEM_COLOUR];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++(UIColor *) getTabBarUnSelectedItemColour{
+    NSData *colorData = [[NSUserDefaults standardUserDefaults] objectForKey:TABBAR_UNSELECTED_ITEM_COLOUR];
+    UIColor *color = [NSKeyedUnarchiver unarchiveObjectWithData:colorData];
+    return color ? color : [UIColor whiteColor];
+}
+
++(void) setTabBarUnSelectedItemColour:(UIColor *)color{
+    NSData * colorData = [NSKeyedArchiver archivedDataWithRootObject:color];
+    [[NSUserDefaults standardUserDefaults] setObject:colorData forKey:TABBAR_UNSELECTED_ITEM_COLOUR];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++(UIColor *) getAttachmentIconColour{
+    NSData *colorData = [[NSUserDefaults standardUserDefaults] objectForKey:ATTACHMENT_ITEM_COLOUR];
+    UIColor *color = [NSKeyedUnarchiver unarchiveObjectWithData:colorData];
+    return color ? color : [UIColor whiteColor];
+}
+
++(void) setAttachmentIconColour:(UIColor *)color{
+    NSData * colorData = [NSKeyedArchiver archivedDataWithRootObject:color];
+    [[NSUserDefaults standardUserDefaults] setObject:colorData forKey:ATTACHMENT_ITEM_COLOUR];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++(UIColor *) getSendIconColour{
+    NSData *colorData = [[NSUserDefaults standardUserDefaults] objectForKey:SEND_ITEM_COLOUR];
+    UIColor *color = [NSKeyedUnarchiver unarchiveObjectWithData:colorData];
+    return color ? color : [UIColor whiteColor];
+}
+
++(void) setSendIconColour:(UIColor *)color{
+    NSData * colorData = [NSKeyedArchiver archivedDataWithRootObject:color];
+    [[NSUserDefaults standardUserDefaults] setObject:colorData forKey:SEND_ITEM_COLOUR];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++(UIColor *) getMessageSubtextColour{
+    NSData *colorData = [[NSUserDefaults standardUserDefaults] objectForKey:MESSAGE_SUBTEXT_COLOUR];
+    UIColor *color = [NSKeyedUnarchiver unarchiveObjectWithData:colorData];
+    return color ? color : [UIColor blackColor];
+}
+
++(void) setMessageSubtextColour:(UIColor *)color{
+    NSData * colorData = [NSKeyedArchiver archivedDataWithRootObject:color];
+    [[NSUserDefaults standardUserDefaults] setObject:colorData forKey:MESSAGE_SUBTEXT_COLOUR];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++(UIColor *) getProfileMainColour{
+    NSData *colorData = [[NSUserDefaults standardUserDefaults] objectForKey:PROFILE_MAIN_COLOUR];
+    UIColor *color = [NSKeyedUnarchiver unarchiveObjectWithData:colorData];
+    return color ? color : [UIColor colorWithRed:0.00 green:0.48 blue:1.00 alpha:1.0];;
+}
+
++(void) setProfileMainColour:(UIColor *)color{
+    NSData * colorData = [NSKeyedArchiver archivedDataWithRootObject:color];
+    [[NSUserDefaults standardUserDefaults] setObject:colorData forKey:PROFILE_MAIN_COLOUR];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++(UIColor *) getProfileSubColour{
+    NSData *colorData = [[NSUserDefaults standardUserDefaults] objectForKey:PROFILE_SUB_COLOUR];
+    UIColor *color = [NSKeyedUnarchiver unarchiveObjectWithData:colorData];
+    return color ? color : [UIColor colorWithRed:0.93 green:0.98 blue:1.00 alpha:1.0];;
+}
+
++(void) setProfileSubColour:(UIColor *)color{
+    NSData * colorData = [NSKeyedArchiver archivedDataWithRootObject:color];
+    [[NSUserDefaults standardUserDefaults] setObject:colorData forKey:PROFILE_SUB_COLOUR];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+
++(UIColor *) getNewContactMainColour{
+    NSData *colorData = [[NSUserDefaults standardUserDefaults] objectForKey:NEW_CONTACT_MAIN_COLOUR];
+    UIColor *color = [NSKeyedUnarchiver unarchiveObjectWithData:colorData];
+    return color ? color : [UIColor colorWithRed:0.00 green:0.48 blue:1.00 alpha:1.0];
+}
+
++(void) setNewContactMainColour:(UIColor *)color{
+    NSData * colorData = [NSKeyedArchiver archivedDataWithRootObject:color];
+    [[NSUserDefaults standardUserDefaults] setObject:colorData forKey:NEW_CONTACT_MAIN_COLOUR];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++(UIColor *) getNewContactSubColour{
+    NSData *colorData = [[NSUserDefaults standardUserDefaults] objectForKey:NEW_CONTACT_SUB_COLOUR];
+    UIColor *color = [NSKeyedUnarchiver unarchiveObjectWithData:colorData];
+    return color ? color : [UIColor whiteColor];
+}
+
++(void) setNewContactSubColour:(UIColor *)color{
+    NSData * colorData = [NSKeyedArchiver archivedDataWithRootObject:color];
+    [[NSUserDefaults standardUserDefaults] setObject:colorData forKey:NEW_CONTACT_SUB_COLOUR];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++(UIColor *) getNewContactTextColour{
+    NSData *colorData = [[NSUserDefaults standardUserDefaults] objectForKey:NEW_CONTACT_TEXT_COLOUR];
+    UIColor *color = [NSKeyedUnarchiver unarchiveObjectWithData:colorData];
+    return color ? color : nil;
+}
+
++(void) setNewContactTextColour:(UIColor *)color{
+    NSData * colorData = [NSKeyedArchiver archivedDataWithRootObject:color];
+    [[NSUserDefaults standardUserDefaults] setObject:colorData forKey:NEW_CONTACT_TEXT_COLOUR];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+
 +(NSString*) getAddContactNotificationName{
     return [[NSUserDefaults standardUserDefaults] valueForKey:ADD_CONTACT_NOTIFICATION];
-    
 }
 
 +(void) setAddContactNotificationName:(NSString*) name{
