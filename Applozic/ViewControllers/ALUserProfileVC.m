@@ -67,7 +67,9 @@
     self.notificationToggle.transform = CGAffineTransformMakeScale(0.75, 0.75);
     self.onlineToggleSwitch.transform = CGAffineTransformMakeScale(0.75, 0.75);
     
-    
+    [self.profileMainImage setBackgroundColor:[ALApplozicSettings getProfileMainColour]];
+    [self.profileMainView setBackgroundColor:[ALApplozicSettings getProfileSubColour]];
+    [self.mobileNotification setTextColor:[ALApplozicSettings getProfileMainColour]];
     
 }
 

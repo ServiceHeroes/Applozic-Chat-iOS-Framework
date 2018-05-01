@@ -138,6 +138,8 @@
         [self createAndLaunchChatView ];
     }
     
+    self.create
+    
 }
 
 -(void)loadMessages:(NSNotification *)notification
@@ -891,6 +893,11 @@
         contactCell.imageMarker.hidden = YES;
         contactCell.mMessageLabel.hidden = NO;
     }
+    
+    UIColor *subTextColour = [ALApplozicSettings getMessageSubtextColour];
+    contactCell.imageNameLabel.textColor = subTextColour;
+    contactCell.mMessageLabel.textColor = subTextColour;
+    contactCell.imageMarker.tintColor = subTextColour;
 }
 
 //==============================================================================================================================================

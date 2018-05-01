@@ -147,6 +147,13 @@
     msgVC.messagesViewDelegate = self;
     
     [[theTabBar tabBar] setBarTintColor:[ALApplozicSettings getTabBarBackgroundColour]];
+    [theTabBar.view setTintColor:[ALApplozicSettings getTabBarSelectedItemColour]];
+    
+    if ([tabBAR.tabBar respondsToSelector:@selector(setUnselectedItemTintColor:)])
+    {
+        [tabBAR.tabBar setUnselectedItemTintColor:[ALApplozicSettings getTabBarUnSelectedItemColour]];
+    }
+
     
     [viewController presentViewController:theTabBar animated:YES completion:nil];
     

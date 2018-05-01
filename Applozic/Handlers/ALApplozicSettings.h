@@ -104,6 +104,17 @@ static NSString *const HIDE_MESSAGES_WITH_METADATA_KEYS = @"com.applozic.HIDE_ME
 static NSString *const ALDisableMultiSelectGalleryView = @"ALDisableMultiSelectGalleryView";
 
 #define TABBAR_BACKGROUND_COLOUR @"com.applozic.userdefault.TABBAR_BACKGROUND_COLOUR"
+#define TABBAR_SELECTED_ITEM_COLOUR @"com.applozic.userdefault.TABBAR_SELECTED_ITEM_COLOUR"
+#define TABBAR_UNSELECTED_ITEM_COLOUR @"com.applozic.userdefault.TABBAR_UNSELECTED_ITEM_COLOUR"
+#define ATTACHMENT_ITEM_COLOUR @"com.applozic.userdefault.ATTACHMENT_ITEM_COLOUR"
+#define SEND_ITEM_COLOUR @"com.applozic.userdefault.SEND_ITEM_COLOUR"
+#define MESSAGE_SUBTEXT_COLOUR @"com.applozic.userdefault.MESSAGE_SUBTEXT_COLOUR"
+#define PROFILE_MAIN_COLOUR @"com.applozic.userdefault.PROFILE_MAIN_COLOUR"
+#define PROFILE_SUB_COLOUR @"com.applozic.userdefault.PROFILE_SUB_COLOUR"
+#define NEW_CONTACT_SUB_COLOUR @"com.applozic.userdefault.NEW_CONTACT_SUB_COLOUR"
+#define NEW_CONTACT_MAIN_COLOUR @"com.applozic.userdefault.NEW_CONTACT_MAIN_COLOUR"
+#define NEW_CONTACT_TEXT_COLOUR @"com.applozic.userdefault.NEW_CONTACT_TEXT_COLOUR"
+
 #define ADD_CONTACT_NOTIFICATION @"com.applozic.userdefault.ADD_CONTACT_NOTIFICATION"
 
 #import <Foundation/Foundation.h>
@@ -433,6 +444,32 @@ static NSString *const ALDisableMultiSelectGalleryView = @"ALDisableMultiSelectG
 +(void)disableMultiSelectGalleryView:(BOOL)enabled;
 +(UIColor *) getTabBarBackgroundColour;
 +(void) setTabBarBackgroundColour:(UIColor *)color;
+
++(UIColor *) getTabBarSelectedItemColour;
++(void) setTabBarSelectedItemColour:(UIColor *)color;
++(UIColor *) getTabBarUnSelectedItemColour;
++(void) setTabBarUnSelectedItemColour:(UIColor *)color;
+
++(UIColor *) getAttachmentIconColour;
++(void) setAttachmentIconColour:(UIColor *)color;
+
++(UIColor *) getSendIconColour;
++(void) setSendIconColour:(UIColor *)color;
+
++(UIColor *) getMessageSubtextColour;
++(void) setMessageSubtextColour:(UIColor *)color;
+
++(UIColor *) getProfileMainColour;
++(void) setProfileMainColour:(UIColor *)color;
++(UIColor *) getProfileSubColour;
++(void) setProfileSubColour:(UIColor *)color;
+
++(UIColor *) getNewContactMainColour;
++(void) setNewContactMainColour:(UIColor *)color;
++(UIColor *) getNewContactSubColour;
++(void) setNewContactSubColour:(UIColor *)color;
++(UIColor *) getNewContactTextColour;
++(void) setNewContactTextColour:(UIColor *)color;
 
 +(NSString*) getAddContactNotificationName;
 +(void) setAddContactNotificationName:(NSString*) name;
