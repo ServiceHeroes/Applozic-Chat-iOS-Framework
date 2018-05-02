@@ -1505,6 +1505,19 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
++(UIColor *) getMessageListTextColor{
+    NSData *colorData = [[NSUserDefaults standardUserDefaults] objectForKey:MESSAGE_TEXT_COLOUR];
+    UIColor *color = [NSKeyedUnarchiver unarchiveObjectWithData:colorData];
+    return color ? color : [UIColor blackColor];
+}
+
++(void) setMessageListTextColor:(UIColor *)color{
+    NSData * colorData = [NSKeyedArchiver archivedDataWithRootObject:color];
+    [[NSUserDefaults standardUserDefaults] setObject:colorData forKey:MESSAGE_TEXT_COLOUR];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+
 +(UIColor *) getProfileMainColour{
     NSData *colorData = [[NSUserDefaults standardUserDefaults] objectForKey:PROFILE_MAIN_COLOUR];
     UIColor *color = [NSKeyedUnarchiver unarchiveObjectWithData:colorData];
@@ -1563,6 +1576,30 @@
 +(void) setNewContactTextColour:(UIColor *)color{
     NSData * colorData = [NSKeyedArchiver archivedDataWithRootObject:color];
     [[NSUserDefaults standardUserDefaults] setObject:colorData forKey:NEW_CONTACT_TEXT_COLOUR];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++(UIColor *) getSearchBarTintColour{
+    NSData *colorData = [[NSUserDefaults standardUserDefaults] objectForKey:SEARCHBAR_TINT_COLOUR];
+    UIColor *color = [NSKeyedUnarchiver unarchiveObjectWithData:colorData];
+    return color ? color : nil;
+}
+
++(void) setSearchBarTintColour:(UIColor *)color{
+    NSData * colorData = [NSKeyedArchiver archivedDataWithRootObject:color];
+    [[NSUserDefaults standardUserDefaults] setObject:colorData forKey:SEARCHBAR_TINT_COLOUR];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++(UIColor *) getContactListBackgroundColour{
+    NSData *colorData = [[NSUserDefaults standardUserDefaults] objectForKey:CONTACTLIST_BG_COLOUR];
+    UIColor *color = [NSKeyedUnarchiver unarchiveObjectWithData:colorData];
+    return color ? color : [UIColor whiteColor];
+}
+
++(void) setContactListBackgroundColour:(UIColor *)color{
+    NSData * colorData = [NSKeyedArchiver archivedDataWithRootObject:color];
+    [[NSUserDefaults standardUserDefaults] setObject:colorData forKey:CONTACTLIST_BG_COLOUR];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
