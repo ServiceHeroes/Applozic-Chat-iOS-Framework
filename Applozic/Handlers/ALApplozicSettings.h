@@ -26,6 +26,7 @@
 #define FILTER_CONTACT_START_TIME @"com.applozic.userdefault.FILTER_CONTACT_START_TIME"
 #define WALLPAPER_IMAGE @"com.applozic.userdefault.WALLPAPER_IMAGE"
 #define CUSTOM_MSG_BACKGROUND_COLOR @"com.applozic.userdefault.CUSTOM_MSG_BACKGROUND_COLOR"
+#define CUSTOM_MSG_TEXT_COLOR @"com.applozic.userdefault.CUSTOM_MSG_TEXT_COLOR"
 #define ONLINE_CONTACT_LIMIT @"com.applozic.userdefault.ONLINE_CONTACT_LIMIT"
 #define GROUP_EXIT_BUTTON @"com.applozic.userdefault.GROUP_EXIT_BUTTON"
 #define GROUP_MEMBER_ADD_OPTION @"com.applozic.userdefault.GROUP_MEMBER_ADD_OPTION"
@@ -109,11 +110,15 @@ static NSString *const ALDisableMultiSelectGalleryView = @"ALDisableMultiSelectG
 #define ATTACHMENT_ITEM_COLOUR @"com.applozic.userdefault.ATTACHMENT_ITEM_COLOUR"
 #define SEND_ITEM_COLOUR @"com.applozic.userdefault.SEND_ITEM_COLOUR"
 #define MESSAGE_SUBTEXT_COLOUR @"com.applozic.userdefault.MESSAGE_SUBTEXT_COLOUR"
+#define MESSAGE_TEXT_COLOUR @"com.applozic.userdefault.MESSAGE_TEXT_COLOUR"
 #define PROFILE_MAIN_COLOUR @"com.applozic.userdefault.PROFILE_MAIN_COLOUR"
 #define PROFILE_SUB_COLOUR @"com.applozic.userdefault.PROFILE_SUB_COLOUR"
 #define NEW_CONTACT_SUB_COLOUR @"com.applozic.userdefault.NEW_CONTACT_SUB_COLOUR"
 #define NEW_CONTACT_MAIN_COLOUR @"com.applozic.userdefault.NEW_CONTACT_MAIN_COLOUR"
 #define NEW_CONTACT_TEXT_COLOUR @"com.applozic.userdefault.NEW_CONTACT_TEXT_COLOUR"
+#define CONTACTLIST_BG_COLOUR @"com.applozic.userdefault.CONTACTLIST_BG_COLOUR"
+#define SEARCHBAR_TINT_COLOUR @"com.applozic.userdefault.SEARCHBAR_TINT_COLOUR"
+
 
 #define ADD_CONTACT_NOTIFICATION @"com.applozic.userdefault.ADD_CONTACT_NOTIFICATION"
 
@@ -195,6 +200,10 @@ static NSString *const ALDisableMultiSelectGalleryView = @"ALDisableMultiSelectG
 +(void)setCustomMessageBackgroundColor:(UIColor *)color;
 
 +(UIColor *)getCustomMessageBackgroundColor;
+
++(void)setCustomMessageTextColor:(UIColor *)color;
+
++(UIColor *)getCustomMessageTextColor;
 
 +(void)setGroupExitOption:(BOOL)option;
 +(BOOL)getGroupExitOption;
@@ -470,6 +479,15 @@ static NSString *const ALDisableMultiSelectGalleryView = @"ALDisableMultiSelectG
 +(void) setNewContactSubColour:(UIColor *)color;
 +(UIColor *) getNewContactTextColour;
 +(void) setNewContactTextColour:(UIColor *)color;
+
++(UIColor *) getMessageListTextColor;
++(void) setMessageListTextColor:(UIColor *)color;
+
++(UIColor *) getContactListBackgroundColour;
++(void) setContactListBackgroundColour:(UIColor *)color;
+
++(UIColor *) getSearchBarTintColour;
++(void) setSearchBarTintColour:(UIColor *)color;
 
 +(NSString*) getAddContactNotificationName;
 +(void) setAddContactNotificationName:(NSString*) name;

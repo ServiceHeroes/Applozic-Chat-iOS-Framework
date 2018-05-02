@@ -257,6 +257,22 @@
     return customMessageBackGroundColor;
 }
 
++(void)setCustomMessageTextColor:(UIColor *)color{
+    
+    NSData * recievedCustomBackgroundColorData = [NSKeyedArchiver archivedDataWithRootObject:color];
+    [[NSUserDefaults standardUserDefaults] setValue:recievedCustomBackgroundColorData
+                                             forKey:CUSTOM_MSG_TEXT_COLOR];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++(UIColor *)getCustomMessageTextColor
+{
+    NSData *customMessageBackGroundColorData = [[NSUserDefaults standardUserDefaults]
+                                                objectForKey:CUSTOM_MSG_TEXT_COLOR];
+    UIColor *customMessageBackGroundColor = [NSKeyedUnarchiver unarchiveObjectWithData:customMessageBackGroundColorData];
+    return customMessageBackGroundColor;
+}
+
 +(void)setGroupExitOption:(BOOL)option{
     [[NSUserDefaults standardUserDefaults] setBool:option forKey:GROUP_EXIT_BUTTON];
     [[NSUserDefaults standardUserDefaults] synchronize];
@@ -1294,6 +1310,19 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
++(UIColor *) getMessageListTextColor{
+    NSData *colorData = [[NSUserDefaults standardUserDefaults] objectForKey:MESSAGE_TEXT_COLOUR];
+    UIColor *color = [NSKeyedUnarchiver unarchiveObjectWithData:colorData];
+    return color ? color : [UIColor blackColor];
+}
+
++(void) setMessageListTextColor:(UIColor *)color{
+    NSData * colorData = [NSKeyedArchiver archivedDataWithRootObject:color];
+    [[NSUserDefaults standardUserDefaults] setObject:colorData forKey:MESSAGE_TEXT_COLOUR];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+
 +(UIColor *) getProfileMainColour{
     NSData *colorData = [[NSUserDefaults standardUserDefaults] objectForKey:PROFILE_MAIN_COLOUR];
     UIColor *color = [NSKeyedUnarchiver unarchiveObjectWithData:colorData];
@@ -1352,6 +1381,30 @@
 +(void) setNewContactTextColour:(UIColor *)color{
     NSData * colorData = [NSKeyedArchiver archivedDataWithRootObject:color];
     [[NSUserDefaults standardUserDefaults] setObject:colorData forKey:NEW_CONTACT_TEXT_COLOUR];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++(UIColor *) getSearchBarTintColour{
+    NSData *colorData = [[NSUserDefaults standardUserDefaults] objectForKey:SEARCHBAR_TINT_COLOUR];
+    UIColor *color = [NSKeyedUnarchiver unarchiveObjectWithData:colorData];
+    return color ? color : nil;
+}
+
++(void) setSearchBarTintColour:(UIColor *)color{
+    NSData * colorData = [NSKeyedArchiver archivedDataWithRootObject:color];
+    [[NSUserDefaults standardUserDefaults] setObject:colorData forKey:SEARCHBAR_TINT_COLOUR];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++(UIColor *) getContactListBackgroundColour{
+    NSData *colorData = [[NSUserDefaults standardUserDefaults] objectForKey:CONTACTLIST_BG_COLOUR];
+    UIColor *color = [NSKeyedUnarchiver unarchiveObjectWithData:colorData];
+    return color ? color : [UIColor whiteColor];
+}
+
++(void) setContactListBackgroundColour:(UIColor *)color{
+    NSData * colorData = [NSKeyedArchiver archivedDataWithRootObject:color];
+    [[NSUserDefaults standardUserDefaults] setObject:colorData forKey:CONTACTLIST_BG_COLOUR];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 

@@ -139,6 +139,8 @@
         [self.segmentControl setTitleTextAttributes:highlightedAttributes forState:UIControlStateSelected];
         [self.segmentControl setTitleTextAttributes:highlightedAttributes forState:UIControlStateNormal];
     }
+    
+    [_searchBar setBarTintColor:[ALApplozicSettings getSearchBarTintColour]];
 }
 
 -(void)subProcessContactFetch
