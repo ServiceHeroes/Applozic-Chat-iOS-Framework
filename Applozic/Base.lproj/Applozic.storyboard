@@ -223,7 +223,7 @@
                                 <action selector="backButtonAction:" destination="BYZ-38-t0r" id="vWD-0a-q4j"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="compose" id="3pR-ud-INa">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="3pR-ud-INa">
                             <connections>
                                 <action selector="navigationRightButtonAction:" destination="BYZ-38-t0r" id="tds-rS-yDu"/>
                             </connections>
