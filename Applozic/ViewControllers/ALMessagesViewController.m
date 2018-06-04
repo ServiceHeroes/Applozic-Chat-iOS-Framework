@@ -1474,29 +1474,37 @@
 
 -(IBAction)createGroup:(id)sender
 {
-    if(![ALDataNetworkConnection checkDataNetworkAvailable])
-    {
-        [self noDataNotificationView];
+    
+    NSString* notificationName = [ALApplozicSettings getCreateGroupNotificationName];
+    
+    if(notificationName == nil){
+        if(![ALDataNetworkConnection checkDataNetworkAvailable])
+        {
+            [self noDataNotificationView];
+            return;
+        }
+        
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Applozic" bundle:[NSBundle bundleForClass:[self class]]];
+        
+        ALGroupCreationViewController * groupCreation = (ALGroupCreationViewController *)[storyboard instantiateViewControllerWithIdentifier:@"ALGroupCreationViewController"];
+        
+        groupCreation.isViewForUpdatingGroup = NO;
+        
+        if([ALApplozicSettings isContactsGroupEnabled ] && _contactsGroupId)
+        {
+            [ALApplozicSettings setContactsGroupId:_contactsGroupId];
+        }
+        
+        if(self.parentGroupKey && [ALApplozicSettings getSubGroupLaunchFlag])
+        {
+            groupCreation.parentChannelKey = self.parentGroupKey;
+        }
+        
+        [self.navigationController pushViewController:groupCreation animated:YES];
         return;
     }
     
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Applozic" bundle:[NSBundle bundleForClass:[self class]]];
-    
-    ALGroupCreationViewController * groupCreation = (ALGroupCreationViewController *)[storyboard instantiateViewControllerWithIdentifier:@"ALGroupCreationViewController"];
-    
-    groupCreation.isViewForUpdatingGroup = NO;
-    
-    if([ALApplozicSettings isContactsGroupEnabled ] && _contactsGroupId)
-    {
-        [ALApplozicSettings setContactsGroupId:_contactsGroupId];
-    }
-    
-    if(self.parentGroupKey && [ALApplozicSettings getSubGroupLaunchFlag])
-    {
-        groupCreation.parentChannelKey = self.parentGroupKey;
-    }
-    
-    [self.navigationController pushViewController:groupCreation animated:YES];
+    [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:self.navigationController];
 }
 
 -(void)noDataNotificationView

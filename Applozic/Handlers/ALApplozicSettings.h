@@ -121,6 +121,7 @@ static NSString *const ALDisableMultiSelectGalleryView = @"ALDisableMultiSelectG
 
 
 #define ADD_CONTACT_NOTIFICATION @"com.applozic.userdefault.ADD_CONTACT_NOTIFICATION"
+#define CREATE_GROUP_NOTIFICATION @"com.applozic.userdefault.CREATE_GROUP_NOTIFICATION"
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
@@ -491,4 +492,7 @@ static NSString *const ALDisableMultiSelectGalleryView = @"ALDisableMultiSelectG
 
 +(NSString*) getAddContactNotificationName;
 +(void) setAddContactNotificationName:(NSString*) name;
+
++(NSString*) getCreateGroupNotificationName;
++(void) setCreateGroupNotificationName:(NSString*) name;
 @end

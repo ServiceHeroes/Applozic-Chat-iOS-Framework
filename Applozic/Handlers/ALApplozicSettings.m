@@ -1418,4 +1418,13 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
++(NSString*) getCreateGroupNotificationName{
+    return [[NSUserDefaults standardUserDefaults] valueForKey:CREATE_GROUP_NOTIFICATION];
+}
+
++(void) setCreateGroupNotificationName:(NSString*) name{
+    [[NSUserDefaults standardUserDefaults] setValue:name forKey:CREATE_GROUP_NOTIFICATION];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
 @end
