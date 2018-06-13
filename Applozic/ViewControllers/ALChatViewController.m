@@ -2274,6 +2274,7 @@
     }
     
     [self.mTableView setBackgroundColor:[ALApplozicSettings getContactListBackgroundColour]];
+    [self.mTableView.superview setBackgroundColor:[ALApplozicSettings getContactListBackgroundColour]];
 }
 
 //==============================================================================================================================================
