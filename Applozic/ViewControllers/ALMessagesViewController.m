@@ -127,7 +127,6 @@
                                                                            self.view.frame.size.height/2 - navigationHeight,
                                                                            self.view.frame.size.width, 30)];
     
-    [self.emptyConversationText setText:[ALApplozicSettings getEmptyConversationText]];
     [self.emptyConversationText setTextAlignment:NSTextAlignmentCenter];
     [self.view addSubview:self.emptyConversationText];
     self.emptyConversationText.hidden = YES;

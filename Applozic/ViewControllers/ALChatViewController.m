@@ -608,7 +608,6 @@
 {
     if(![self.alMessageWrapper getUpdatedMessageArray].count && [ALApplozicSettings getVisibilityNoConversationLabelChatVC])
     {
-        [self.noConLabel setText:[ALApplozicSettings getEmptyConversationText]];
         [self.noConLabel setHidden:NO];
 
         return;

@@ -1,0 +1,197 @@
+```
+
+/* Class = "UITextView"; text = "Please provide group name."; ObjectID = "10y-gF-sJ8"; */
+"10y-gF-sJ8.text" = “Voeg groepsnaam toe.”;
+
+/* Class = "UIButton"; normalTitle = "Get Started"; ObjectID = "1Kf-N3-0PL"; */
+"1Kf-N3-0PL.normalTitle" = “Start”;
+
+/* Class = "UILabel"; text = "Notifications"; ObjectID = "1ch-V6-7WF"; */
+"1ch-V6-7WF.text" = "Notificaties";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "1sI-lr-lrM"; */
+"1sI-lr-lrM.text" = "Label";
+
+/* Class = "UISegmentedControl"; 2zp-0K-ndH.segmentTitles[0] = "Contacts"; ObjectID = "2zp-0K-ndH"; */
+"2zp-0K-ndH.segmentTitles[0]" = "Contacten”;
+
+/* Class = "UISegmentedControl"; 2zp-0K-ndH.segmentTitles[1] = "Groups"; ObjectID = "2zp-0K-ndH"; */
+"2zp-0K-ndH.segmentTitles[1]" = "Groepen”;
+
+/* Class = "UIViewController"; title = "Message Information"; ObjectID = "4Mh-2P-kc2"; */
+"4Mh-2P-kc2.title" = “Bericht Informatie”;
+
+/* Class = "UILabel"; text = "L"; ObjectID = "4Nu-pi-efZ"; */
+"4Nu-pi-efZ.text" = "L";
+
+/* Class = "UICollectionViewController"; title = "Attachment"; ObjectID = "5ds-lt-Orl"; */
+"5ds-lt-Orl.title" = “Bijlage”;
+
+/* Class = "UILabel"; text = "last seen"; ObjectID = "6e7-cr-Zrj"; */
+"6e7-cr-Zrj.text" = "laatst gezien”;
+
+/* Class = "UITextField"; placeholder = "Email"; ObjectID = "7iM-P1-Q0S"; */
+"7iM-P1-Q0S.placeholder" = "Email";
+
+/* Class = "UIButton"; normalTitle = "RECORD"; ObjectID = "9IS-FH-0AW"; */
+"9IS-FH-0AW.normalTitle" = “OPNEMEN”;
+
+/* Class = "UIButton"; normalTitle = "CANCEL"; ObjectID = "9Tc-ZG-Oae"; */
+"9Tc-ZG-Oae.normalTitle" = “ANNULEREN”;
+
+/* Class = "UIButton"; normalTitle = "Load Earlier Messages"; ObjectID = "Bt8-EH-qKK"; */
+"Bt8-EH-qKK.normalTitle" = "Laad eerdere berichten “;
+
+/* Class = "UILabel"; text = "Name"; ObjectID = "CPK-oH-FUm"; */
+"CPK-oH-FUm.text" = "Naam”;
+
+/* Class = "UIButton"; normalTitle = "Launch Chat List"; ObjectID = "CVw-Yd-6sR"; */
+"CVw-Yd-6sR.normalTitle" = "Laad Chatlijst“;
+
+/* Class = "UITableViewController"; title = "Profile"; ObjectID = "Ec6-td-O0D"; */
+"Ec6-td-O0D.title" = "Profiel”;
+
+/* Class = "UILabel"; text = "L"; ObjectID = "FQ8-OW-duW"; */
+"FQ8-OW-duW.text" = "L";
+
+/* Class = "UILabel"; text = "Muserlabel"; ObjectID = "G4M-aZ-RgP"; */
+"G4M-aZ-RgP.text" = "Muserlabel";
+
+/* Class = "UINavigationItem"; title = "Create Group"; ObjectID = "GZX-25-MlA"; */
+"GZX-25-MlA.title" = “Maak groep”;
+
+/* Class = "UILabel"; text = "Contact Person Name"; ObjectID = "H8h-Lp-4Jd"; */
+"H8h-Lp-4Jd.text" = "Contactpersoon”;
+
+/* Class = "UITextField"; placeholder = "Password"; ObjectID = "HdR-Cv-Mvf"; */
+"HdR-Cv-Mvf.placeholder" = “Wachtwoord”;
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "JXn-WO-lHn"; */
+"JXn-WO-lHn.text" = "Label";
+
+/* Class = "UIViewController"; title = "Send Location"; ObjectID = "Jcz-BB-dxz"; */
+"Jcz-BB-dxz.title" = “Deel locatie”;
+
+/* Class = "UIButton"; normalTitle = "Send Location"; ObjectID = "KAL-xm-Upd"; */
+"KAL-xm-Upd.normalTitle" = “Deel locatie”;
+
+/* Class = "UILabel"; text = "L"; ObjectID = "MBK-3V-a7T"; */
+"MBK-3V-a7T.text" = "L";
+
+/* Class = "UITextField"; placeholder = "Type your group name"; ObjectID = "NDG-3p-bsz"; */
+"NDG-3p-bsz.placeholder" = "Type your groep naam”;
+
+/* Class = "UILabel"; text = "Phone"; ObjectID = "OxQ-qG-JVd"; */
+"OxQ-qG-JVd.text" = “Telefoon”;
+
+/* Class = "UILabel"; text = "Email Id"; ObjectID = "QcT-8f-goH"; */
+"QcT-8f-goH.text" = "Email Id";
+
+/* Class = "UILabel"; text = "0 : 0"; ObjectID = "RIr-mL-gDr"; */
+"RIr-mL-gDr.text" = "0 : 0";
+
+/* Class = "UILabel"; text = "Profile Status"; ObjectID = "Tfg-C1-Gou"; */
+"Tfg-C1-Gou.text" = "Profiel Status";
+
+/* Class = "UILabel"; text = "Admin"; ObjectID = "Tsi-AT-Efm"; */
+"Tsi-AT-Efm.text" = "Admin";
+
+/* Class = "UIButton"; normalTitle = "Close"; ObjectID = "UzU-Rk-dCR"; */
+"UzU-Rk-dCR.normalTitle" = “Sluit”;
+
+/* Class = "UITextField"; placeholder = "Write Some Text..."; ObjectID = "WoM-O9-ozQ"; */
+"WoM-O9-ozQ.placeholder" = “Tik wat in…”;
+
+/* Class = "UIButton"; normalTitle = "SEND"; ObjectID = "WzO-db-ke9"; */
+"WzO-db-ke9.normalTitle" = “ZEND";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "Yq9-H1-OCq"; */
+"Yq9-H1-OCq.normalTitle" = “Knop”;
+
+/* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "acE-XA-BOH"; */
+"acE-XA-BOH.title" = “Terug”;
+
+/* Class = "UILabel"; text = "Main Label"; ObjectID = "b0D-o3-Tj0"; */
+"b0D-o3-Tj0.text" = “Hoofd Label“;
+
+/* Class = "UIButton"; normalTitle = "Launch Chat With Applozic"; ObjectID = "c9p-mV-zAY"; */
+"c9p-mV-zAY.normalTitle" = "Lanceer Chat With Applozic";
+
+/* Class = "UILabel"; text = "Today"; ObjectID = "cgS-st-orl"; */
+"cgS-st-orl.text" = “Vandaag”;
+
+/* Class = "UITableViewController"; title = "User Profile"; ObjectID = "dRO-yk-xMN"; */
+"dRO-yk-xMN.title" = “Gebruikersprofiel”;
+
+/* Class = "UILabel"; text = "Name"; ObjectID = "f78-le-ljU"; */
+"f78-le-ljU.text" = "Naam”;
+
+/* Class = "UILabel"; text = "Status"; ObjectID = "gRC-lU-asv"; */
+"gRC-lU-asv.text" = "Status";
+
+/* Class = "UITextField"; placeholder = "User id"; ObjectID = "hRe-YD-lEv"; */
+"hRe-YD-lEv.placeholder" = "User id";
+
+/* Class = "UITextField"; text = "iosdev"; ObjectID = "hRe-YD-lEv"; */
+"hRe-YD-lEv.text" = "iosdev";
+
+/* Class = "UILabel"; text = "Contact No."; ObjectID = "iGy-8k-zBZ"; */
+"iGy-8k-zBZ.text" = "Contact Nummer.”;
+
+/* Class = "UIViewController"; title = "Record Audio"; ObjectID = "iR0-H2-IEH"; */
+"iR0-H2-IEH.title" = "Record Audio";
+
+/* Class = "UILabel"; text = "Last Seen"; ObjectID = "jIT-7M-QvL"; */
+"jIT-7M-QvL.text" = "Laatst gelezen”;
+
+/* Class = "UILabel"; text = "EmailID"; ObjectID = "lSe-4F-6bO"; */
+"lSe-4F-6bO.text" = "EmailID";
+
+/* Class = "UIButton"; normalTitle = "Create Group"; ObjectID = "lgk-it-0jV"; */
+"lgk-it-0jV.normalTitle" = "Creeer Groep";
+
+/* Class = "UIButton"; normalTitle = "PLAY"; ObjectID = "mNe-Kg-9lK"; */
+"mNe-Kg-9lK.normalTitle" = "PLAY";
+
+/* Class = "UILabel"; text = "MMessageLabel"; ObjectID = "mUK-kK-XjJ"; */
+"mUK-kK-XjJ.text" = "MMessageLabel";
+
+/* Class = "UILabel"; text = "User Name"; ObjectID = "mvZ-0e-sJV"; */
+"mvZ-0e-sJV.text" = "User Naam”;
+
+/* Class = "UILabel"; text = "Image Label "; ObjectID = "nFm-Yv-yQF"; */
+"nFm-Yv-yQF.text" = “Afbeelding Label ";
+
+/* Class = "UILabel"; text = "14:14"; ObjectID = "r8N-HC-XMt"; */
+"r8N-HC-XMt.text" = "14:14";
+
+/* Class = "UIButton"; normalTitle = "New Broadcast"; ObjectID = "rY1-d5-lFk"; */
+"rY1-d5-lFk.normalTitle" = "Nieuwe uitzending“;
+
+/* Class = "UILabel"; text = "Mobile Notifications"; ObjectID = "rd6-bl-npA"; */
+"rd6-bl-npA.text" = "Mobiel Notifications";
+
+/* Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "rtK-cw-32j"; */
+"rtK-cw-32j.title" = “Annuleer”;
+
+/* Class = "UIBarButtonItem"; title = " < Back  "; ObjectID = "sTB-Ym-PL1"; */
+"sTB-Ym-PL1.title" = " < Terug ";
+
+/* Class = "UILabel"; text = "You have no conversation."; ObjectID = "sTD-T1-vIc"; */
+"sTD-T1-vIc.text" = “Je hebt nog geen berichten.”;
+
+/* Class = "UIButton"; normalTitle = "PAUSE"; ObjectID = "sdj-qH-xjU"; */
+"sdj-qH-xjU.normalTitle" = "PAUSE";
+
+/* Class = "UILabel"; text = "Profile Status"; ObjectID = "uPH-8k-6t7"; */
+"uPH-8k-6t7.text" = "Profiel Status";
+
+/* Class = "UIButton"; normalTitle = "STOP "; ObjectID = "vw2-gw-jej"; */
+"vw2-gw-jej.normalTitle" = "STOP ";
+
+/* Class = "UILabel"; text = "L"; ObjectID = "yhR-xr-fbW"; */
+"yhR-xr-fbW.text" = "L";
+
+/* Class = "UILabel"; text = "message text for reply"; ObjectID = "zqt-11-Rpr"; */
+"zqt-11-Rpr.text" = “tekstbericht voor antwoord;
+```
