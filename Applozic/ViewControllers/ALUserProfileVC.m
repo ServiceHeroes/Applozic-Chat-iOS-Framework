@@ -26,6 +26,9 @@
 #import "ALConstant.h"
 #import "ALMessagesViewController.h"
 #import "ALPushAssist.h"
+#import "ALUserDefaultsHandler.h"
+#import "ALUserService.h"
+#import "ALUserDetail.h"
 
 @interface ALUserProfileVC () <NSURLConnectionDataDelegate>
 
@@ -81,6 +84,25 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    NSString *userId = [ALUserDefaultsHandler getUserId];
+    [ALUserService userDetailServerCall:userId withCompletion:^(ALUserDetail *alUserDetail)
+     {
+         if(alUserDetail)
+         {
+             [ALUserDefaultsHandler setServerCallDoneForUserInfo:YES ForContact:alUserDetail.userId];
+             [[[ALContactDBService alloc] init] updateUserDetail:alUserDetail];
+         }
+         else
+         {
+             NSLog(@"CHECK LAST_SEEN_SERVER CALL");
+         }
+         
+         [self loadProfile];
+     }];
+}
+
+- (void)loadProfile {
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(showMQTTNotification:)
