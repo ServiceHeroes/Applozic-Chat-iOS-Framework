@@ -704,7 +704,7 @@
             {
                 contactCell.mUserNameLabel.text = [alContact getDisplayName];
                 contactCell.mUserNameLabel.textColor = [ALApplozicSettings getMessageListTextColor];
-                contactCell.mTimeLabel.textColor = [ALApplozicSettings getMessageListTextColor];
+                contactCell.mTimeLabel.textColor = [ALApplozicSettings getMessageSubtextColour];
                 [self updateProfileImageAndUnreadCount:contactCell WithChannel:nil orChannelId:alContact];
 
             }

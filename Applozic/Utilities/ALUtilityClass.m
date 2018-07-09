@@ -327,7 +327,10 @@
 +(UIImage *)getImageFromFramworkBundle:(NSString *) UIImageName{
     
     NSBundle * bundle = [NSBundle bundleForClass:ALUtilityClass.class];
-    UIImage *image = [UIImage imageNamed:UIImageName inBundle:bundle compatibleWithTraitCollection:nil ];
+    UIImage *image = [UIImage imageNamed:UIImageName inBundle:nil compatibleWithTraitCollection:nil];
+    if (image == nil){
+        image = [UIImage imageNamed:UIImageName inBundle:bundle compatibleWithTraitCollection:nil];
+    }
     image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     return image;
 }
