@@ -220,6 +220,7 @@ static CGFloat const sendTextViewCornerRadius = 15.0f;
             [self  dismissViewControllerAnimated:YES completion:nil];
         }
     }
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"AL_CHAT_CLOSED" object:nil];
 }
 
 -(void)refreshTable:(id)sender {
