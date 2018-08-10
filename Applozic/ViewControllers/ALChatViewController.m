@@ -3714,7 +3714,7 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
     {
         
         NSString *str = NSLocalizedStringWithDefaultValue(@"lastSeenYesterday", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle], @"Last seen yesterday at %@", @"");
-        [format setDateFormat:@"hh:mm a"];
+        [format setDateFormat:@"HH:mm"];
         
         str = [NSString stringWithFormat:str,[format stringFromDate:date]];
         if([str hasPrefix:@"0"])
@@ -3725,7 +3725,7 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
     }
     else
     {
-        [format setDateFormat:@"EE, MMM dd, yyy"];
+        [format setDateFormat:@"EE, dd MMM, yyy"];
         NSString *str = NSLocalizedStringWithDefaultValue(@"lastSeenLabelText", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle], @"Last seen ", @"");
         
         str = [str stringByAppendingString:[format stringFromDate:date]];
