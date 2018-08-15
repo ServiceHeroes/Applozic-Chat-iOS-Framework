@@ -365,24 +365,32 @@
 //==================================
 -(void)addNewMember
 {
-    UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Applozic" bundle:[NSBundle bundleForClass:self.class]];
+    NSString* notificationName = [ALApplozicSettings getUpdateGroupNotificationName];
     
-    ALNewContactsViewController *contactsVC = (ALNewContactsViewController *)[storyboard instantiateViewControllerWithIdentifier:@"ALNewContactsViewController"];
-    
-    contactsVC.contactsInGroup = [NSMutableArray arrayWithArray:[memberIds array]];
-    contactsVC.forGroup = [NSNumber numberWithInt:GROUP_ADDITION];
-    contactsVC.delegate = self;
-    
-    // check if this launch for subgroup
-    ALChannelService * channelService = [[ALChannelService alloc] init];
-    
-    if([ALApplozicSettings getSubGroupLaunchFlag])
-    {
-        ALChannel *parentChannel = [channelService getChannelByKey:self.alChannel.parentKey ? self.alChannel.parentKey : self.alChannel.key];
-        contactsVC.parentChannel = parentChannel;
-        contactsVC.childChannels = [[NSMutableArray alloc] initWithArray:[channelService fetchChildChannelsWithParentKey:parentChannel.key]];
+    if(notificationName == NULL){
+        UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Applozic" bundle:[NSBundle bundleForClass:self.class]];
+        
+        ALNewContactsViewController *contactsVC = (ALNewContactsViewController *)[storyboard instantiateViewControllerWithIdentifier:@"ALNewContactsViewController"];
+        
+        contactsVC.contactsInGroup = [NSMutableArray arrayWithArray:[memberIds array]];
+        contactsVC.forGroup = [NSNumber numberWithInt:GROUP_ADDITION];
+        contactsVC.delegate = self;
+        
+        // check if this launch for subgroup
+        ALChannelService * channelService = [[ALChannelService alloc] init];
+        
+        if([ALApplozicSettings getSubGroupLaunchFlag])
+        {
+            ALChannel *parentChannel = [channelService getChannelByKey:self.alChannel.parentKey ? self.alChannel.parentKey : self.alChannel.key];
+            contactsVC.parentChannel = parentChannel;
+            contactsVC.childChannels = [[NSMutableArray alloc] initWithArray:[channelService fetchChildChannelsWithParentKey:parentChannel.key]];
+        }
+        [self.navigationController pushViewController:contactsVC animated:YES];
     }
-    [self.navigationController pushViewController:contactsVC animated:YES];
+    NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
+    userInfo[@"groupId"] = self.channelKeyID;
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:self.navigationController userInfo:userInfo];
 }
 
 -(void)addNewMembertoGroup:(ALContact *)alcontact withCompletion:(void(^)(NSError *error,ALAPIResponse *response))completion

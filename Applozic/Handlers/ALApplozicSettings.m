@@ -1622,4 +1622,13 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
++(NSString*) getUpdateGroupNotificationName{
+    return [[NSUserDefaults standardUserDefaults] valueForKey:UPDATE_GROUP_NOTIFICATION];
+}
+
++(void) setUpdateGroupNotificationName:(NSString*) name{
+    [[NSUserDefaults standardUserDefaults] setValue:name forKey:UPDATE_GROUP_NOTIFICATION];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
 @end
