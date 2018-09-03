@@ -24,17 +24,14 @@
 
 + (NSString *) formatTimestamp:(NSTimeInterval) timeInterval toFormat:(NSString *) forMatStr
 {
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     
-    NSDateFormatter * formatter =  [[NSDateFormatter alloc] init];
-    [formatter setAMSymbol:@"am"];
-    [formatter setPMSymbol:@"pm"];
-    [formatter setDateFormat:forMatStr];
-    formatter.timeZone = [NSTimeZone localTimeZone];
+    NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"nl_NL"];
+    [dateFormatter setLocale:locale];
+    [dateFormatter setDateFormat:forMatStr];
     
-    NSString * dateStr = [formatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:timeInterval]];
-        
+    NSString * dateStr = [dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:timeInterval]];
     return dateStr;
-    
 }
 
 + (NSString *)generateJsonStringFromDictionary:(NSDictionary *)dictionary {
