@@ -380,7 +380,7 @@
         self.msgdate = NSLocalizedStringWithDefaultValue(@"yesterdayMsgViewText", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle], @"yesterday" , @"");
     }
     
-    [format setDateFormat:@"hh:mm a"];
+    [format setDateFormat:@"HH:mm"];
     [format setAMSymbol:@"am"];
     [format setPMSymbol:@"pm"];
     
