@@ -137,7 +137,8 @@
     if((self.channelKey || self.userIdToLaunch)){
         [self createAndLaunchChatView ];
     }
-    
+    [_mTableView setBackgroundColor:[ALApplozicSettings getContactListBackgroundColour]];
+    [_navigationRightButton setTintColor:[ALApplozicSettings getColorForNavigationItem]];
 }
 
 -(void)loadMessages:(NSNotification *)notification
@@ -656,6 +657,7 @@
             [newBtn setTitle:NSLocalizedStringWithDefaultValue(@"createGroupOptionTitle", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle], @"Create Group", @"")
                     forState:UIControlStateNormal];
             [newBtn sizeToFit];
+            [newBtn setTitleColor:[ALApplozicSettings getMessageListTextColor] forState:UIControlStateNormal];
             
            // Add group button.....
             UIButton *newBroadCast = (UIButton*)[contactCell viewWithTag:102];
@@ -668,6 +670,7 @@
             
             newBroadCast.userInteractionEnabled = [ALApplozicSettings isBroadcastGroupEnable];
             [newBroadCast setHidden:![ALApplozicSettings isBroadcastGroupEnable]];
+            [newBroadCast setTitleColor:[ALApplozicSettings getMessageListTextColor] forState:UIControlStateNormal];
             
         }break;
 
@@ -714,6 +717,8 @@
             else
             {
                 contactCell.mUserNameLabel.text = [alContact getDisplayName];
+                contactCell.mUserNameLabel.textColor = [ALApplozicSettings getMessageListTextColor];
+                contactCell.mTimeLabel.textColor = [ALApplozicSettings getMessageSubtextColour];
                 [self updateProfileImageAndUnreadCount:contactCell WithChannel:nil orChannelId:alContact];
 
             }
@@ -737,7 +742,7 @@
         default:
             break;
     }
-    
+    [contactCell setBackgroundColor:[ALApplozicSettings getContactListBackgroundColour]];
     return contactCell;
 }
 
@@ -752,7 +757,7 @@
     nameIcon.textColor = [UIColor whiteColor];
 
     ALContactService * contactService = [ALContactService new];
-    contactCell.mUserImageView.backgroundColor = [UIColor whiteColor];
+    contactCell.mUserImageView.backgroundColor = [UIColor clearColor];
     if(alChannel)
     {
         
@@ -890,6 +895,10 @@
             contactCell.mMessageLabel.hidden = NO;
         }
         
+        UIColor *subTextColour = [ALApplozicSettings getMessageSubtextColour];
+        contactCell.imageNameLabel.textColor = subTextColour;
+        contactCell.mMessageLabel.textColor = subTextColour;
+        contactCell.imageMarker.tintColor = subTextColour;
     }
     else if (message.contentType == AV_CALL_CONTENT_THREE)
     {

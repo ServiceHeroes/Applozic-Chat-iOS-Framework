@@ -195,7 +195,9 @@ NSString * const ThirdPartyDetailVCNotificationChannelKey = @"ThirdPartyDetailVC
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateVOIPMsg)
                                                  name:@"UPDATE_VOIP_MSG" object:nil];
-
+    
+    [self.attachmentOutlet setTintColor:[ALApplozicSettings getAttachmentIconColour]];
+    [self.sendButton setTintColor:[ALApplozicSettings getSendIconColour]];
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -353,7 +355,7 @@ NSString * const ThirdPartyDetailVCNotificationChannelKey = @"ThirdPartyDetailVC
 
     if(self.text && !self.alMessageWrapper.getUpdatedMessageArray.count)
     {
-        [self.sendMessageTextView setTextColor:[UIColor blackColor]];
+        [self.sendMessageTextView setTextColor:[ALApplozicSettings getTextColorForTypingLabel]];
         self.sendMessageTextView.text = self.text;
     }
     else if ([self.sendMessageTextView.text isEqualToString:@""])
@@ -2304,15 +2306,17 @@ NSString * const ThirdPartyDetailVCNotificationChannelKey = @"ThirdPartyDetailVC
 {
     NSString * imagName = [ALApplozicSettings getChatWallpaperImageName];
     UIImage * backgroundImage = [UIImage imageNamed:imagName];
-    if(!backgroundImage)
+    if(backgroundImage)
     {
+        [self.mTableView setBackgroundColor:[UIColor clearColor]];
+        UIImageView * backgroundImageView = [[UIImageView alloc] initWithFrame:self.view.frame];
+        backgroundImageView.image = backgroundImage;
+        [self.view insertSubview:backgroundImageView atIndex:0];
         return;
     }
 
-    [self.mTableView setBackgroundColor:[UIColor clearColor]];
-    UIImageView * backgroundImageView = [[UIImageView alloc] initWithFrame:self.view.frame];
-    backgroundImageView.image = backgroundImage;
-    [self.view insertSubview:backgroundImageView atIndex:0];
+    [self.mTableView setBackgroundColor:[ALApplozicSettings getContactListBackgroundColour]];
+    [self.mTableView.superview setBackgroundColor:[ALApplozicSettings getContactListBackgroundColour]];
 }
 
 //==============================================================================================================================================
@@ -3808,7 +3812,7 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
 
     if ([textView.text isEqualToString:self.placeHolderTxt])
     {
-        [self placeHolder:@"" andTextColor:[UIColor blackColor]];
+        [self placeHolder:@"" andTextColor:[ALApplozicSettings getTextColorForTypingLabel]];
     }
 }
 
