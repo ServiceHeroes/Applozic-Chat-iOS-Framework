@@ -85,24 +85,6 @@
 {
     [super viewWillAppear:animated];
     
-    NSString *userId = [ALUserDefaultsHandler getUserId];
-    [ALUserService userDetailServerCall:userId withCompletion:^(ALUserDetail *alUserDetail)
-     {
-         if(alUserDetail)
-         {
-             [ALUserDefaultsHandler setServerCallDoneForUserInfo:YES ForContact:alUserDetail.userId];
-             [[[ALContactDBService alloc] init] updateUserDetail:alUserDetail];
-         }
-         else
-         {
-             NSLog(@"CHECK LAST_SEEN_SERVER CALL");
-         }
-         
-         [self loadProfile];
-     }];
-}
-- (void)loadProfile {
-    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(showMQTTNotification:)
                                                  name:@"MQTT_APPLOZIC_01"
