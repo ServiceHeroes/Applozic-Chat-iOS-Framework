@@ -16,12 +16,14 @@
 #import "ALUserClientService.h"
 #import "ALAPIResponse.h"
 #import "ALUserBlockResponse.h"
+#import "ALRealTimeUpdate.h"
+#import "ALMuteRequest.h"
 
 @interface ALUserService : NSObject
 
 +(ALUserService *)sharedInstance;
 
-+(void)processContactFromMessages:(NSArray *) messagesArr withCompletion:(void(^)())completionMark;
++(void)processContactFromMessages:(NSArray *) messagesArr withCompletion:(void(^)(void))completionMark;
 
 +(void)getLastSeenUpdateForUsers:(NSNumber *)lastSeenAt withCompletion:(void(^)(NSMutableArray *))completionMark;
 
@@ -68,5 +70,17 @@
 -(void)processResettingUnreadCount;
 
 -(void)getListOfUsersWithUserName:(NSString *)userName withCompletion:(void(^)(ALAPIResponse* response, NSError * error))completion;
+
+/**
+ This method will update unread count to zero for user once the conversation notification is received
+
+ @param userId  of user the count will be reset to zero
+ @param delegate is used for updating the callback for real time updates
+ */
+-(void)updateConversationReadWithUserId:(NSString *)userId withDelegate: (id<ApplozicUpdatesDelegate>)delegate;
+
+-(void)getMutedUserListWithDelegate: (id<ApplozicUpdatesDelegate>)delegate withCompletion:(void(^)(NSMutableArray* userDetailArray, NSError * error))completion;
+
+-(void) muteUser:(ALMuteRequest *)alMuteRequest withCompletion:(void(^)(ALAPIResponse * response, NSError * error))completion;
 
 @end

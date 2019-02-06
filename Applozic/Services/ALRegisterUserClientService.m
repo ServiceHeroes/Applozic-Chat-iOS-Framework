@@ -152,19 +152,27 @@
             ALSLog(ALLoggerSeverityInfo, @"..");
         }
         
-        completion(response,nil);
+        
         
         [self connect];
         ALMessageDBService * dbService = [[ALMessageDBService alloc] init];
         if(dbService.isMessageTableEmpty)
         {
-            [ALMessageService processLatestMessagesGroupByContact];
+            [ALMessageService processLatestMessagesGroupByContactWithCompletion:^{
+                completion(response,nil);
+            }];
+        } else {
+            completion(response,nil);
         }
         
+        ALUserService * alUserService = [ALUserService new];
+        [alUserService updateUserApplicationInfo];
+        
+        [alUserService getMutedUserListWithDelegate:nil withCompletion:^(NSMutableArray *userDetailArray, NSError *error) {
+    
+        }];
     }];
     
-    ALUserService * alUserService = [ALUserService new];
-    [alUserService updateUserApplicationInfo];
     
     
 }
@@ -263,19 +271,19 @@
 
         ALSLog(ALLoggerSeverityInfo, @"RESPONSE_USER_LOGOUT :: %@", (NSString *)theJson);
         ALAPIResponse *response = [[ALAPIResponse alloc] initWithJSONString:theJson];
-        if(!error && [response.status isEqualToString:@"success"])
-        {
-            NSString *userKey = [ALUserDefaultsHandler getUserKeyString];
-            //            [[UIApplication sharedApplication] unregisterForRemoteNotifications];
-            [ALUserDefaultsHandler clearAll];
-            ALMessageDBService *messageDBService = [[ALMessageDBService alloc] init];
-            [messageDBService deleteAllObjectsInCoreData];
-            
-            [[ALMQTTConversationService sharedInstance] unsubscribeToConversation: userKey];
-        } else {
-            [ALUserDefaultsHandler clearAll];
-            ALMessageDBService *messageDBService = [[ALMessageDBService alloc] init];
-            [messageDBService deleteAllObjectsInCoreData];
+
+        NSString *userKey = [ALUserDefaultsHandler getUserKeyString];
+        BOOL completed = [[ALMQTTConversationService sharedInstance] unsubscribeToConversation: userKey];
+        ALSLog(ALLoggerSeverityInfo, @"Unsubscribed to conversation after logout: %d", completed);
+
+        [ALUserDefaultsHandler clearAll];
+        [ALApplozicSettings clearAll];
+
+        ALMessageDBService *messageDBService = [[ALMessageDBService alloc] init];
+        [messageDBService deleteAllObjectsInCoreData];
+
+        if(error) {
+            ALSLog(ALLoggerSeverityError, @"Error in logout: %@", error.description);
             [[UIApplication sharedApplication] unregisterForRemoteNotifications];
         }
         

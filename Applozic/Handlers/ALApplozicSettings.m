@@ -28,11 +28,34 @@
     return [[NSUserDefaults standardUserDefaults] valueForKey:FONT_FACE];
 }
 
++(void)setChatCellFontTextStyle:(NSString *)fontTextStyle
+{
+    [[NSUserDefaults standardUserDefaults] setObject:fontTextStyle forKey:CHAT_CELL_FONT_TEXT_STYLE];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++(NSString *)getChatCellFontTextStyle
+{
+    return [[NSUserDefaults standardUserDefaults] objectForKey:CHAT_CELL_FONT_TEXT_STYLE];
+}
+
++(void)setChatChannelCellFontTextStyle:(NSString *)fontTextStyle
+{
+    [[NSUserDefaults standardUserDefaults] setObject:fontTextStyle forKey:CHAT_CHANNEL_CELL_FONT_TEXT_STYLE];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++(NSString *)getChatChannelCellFontTextStyle
+{
+    return [[NSUserDefaults standardUserDefaults] objectForKey:CHAT_CHANNEL_CELL_FONT_TEXT_STYLE];
+}
+
 +(void)setTitleForConversationScreen:(NSString *)titleText
 {
     [[NSUserDefaults standardUserDefaults] setValue:titleText forKey:CONVERSATION_TITLE];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
+
 
 +(NSString *)getTitleForConversationScreen
 {
@@ -192,6 +215,8 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
+
+
 +(BOOL)getGroupOption
 {
     return [[NSUserDefaults standardUserDefaults] boolForKey:GROUP_ENABLE];
@@ -253,6 +278,21 @@
 {
     NSData *customMessageBackGroundColorData = [[NSUserDefaults standardUserDefaults]
                                                 objectForKey:CUSTOM_MSG_BACKGROUND_COLOR];
+    UIColor *customMessageBackGroundColor = [NSKeyedUnarchiver unarchiveObjectWithData:customMessageBackGroundColorData];
+    return customMessageBackGroundColor;
+}
+
++(void)setCustomMessageTextColor:(UIColor *)color{
+    
+    NSData * recievedCustomBackgroundColorData = [NSKeyedArchiver archivedDataWithRootObject:color];
+    [[NSUserDefaults standardUserDefaults] setValue:recievedCustomBackgroundColorData
+                                             forKey:CUSTOM_MSG_TEXT_COLOR];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
++(UIColor *)getCustomMessageTextColor
+{
+    NSData *customMessageBackGroundColorData = [[NSUserDefaults standardUserDefaults]
+                                                objectForKey:CUSTOM_MSG_TEXT_COLOR];
     UIColor *customMessageBackGroundColor = [NSKeyedUnarchiver unarchiveObjectWithData:customMessageBackGroundColorData];
     return customMessageBackGroundColor;
 }
@@ -331,6 +371,17 @@
 +(void)setCustomClassName:(NSString *)className
 {
     [[NSUserDefaults standardUserDefaults] setValue:className forKey:THIRD_PARTY_VC_NAME];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++(BOOL)getOptionToPushNotificationToShowCustomGroupDetalVC
+{
+    return [[NSUserDefaults standardUserDefaults] boolForKey:THIRD_PARTY_DETAIL_VC_NOTIFICATION];
+}
+
++(void)setOptionToPushNotificationToShowCustomGroupDetalVC:(BOOL)option
+{
+    [[NSUserDefaults standardUserDefaults] setBool:option forKey:THIRD_PARTY_DETAIL_VC_NOTIFICATION];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
@@ -425,6 +476,21 @@
     UIColor * txtColor = [NSKeyedUnarchiver unarchiveObjectWithData:txtColorData];
     return txtColor ? txtColor : [UIColor colorWithRed:51.0/255 green:51.0/255 blue:51.0/255 alpha:0.5];
 }
+
++(void)setTextColorForMessageTextView:(UIColor *)txtColor
+{
+    NSData * txtColorData = [NSKeyedArchiver archivedDataWithRootObject:txtColor];
+    [[NSUserDefaults standardUserDefaults] setObject:txtColorData forKey:MESSAGE_TEXT_VIEW_COLOR];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++(UIColor *)getTextColorForMessageTextView
+{
+    NSData * txtColorData = [[NSUserDefaults standardUserDefaults] objectForKey:MESSAGE_TEXT_VIEW_COLOR];
+    UIColor * txtColor = [NSKeyedUnarchiver unarchiveObjectWithData:txtColorData];
+    return txtColor ? txtColor : [UIColor blackColor];
+}
+
 
 +(void)setEmptyConversationText:(NSString *)text
 {
@@ -1025,14 +1091,14 @@
 }
 
 +(void) setTemplateMessages:(NSMutableDictionary*)dictionary{
-    
+
     [[NSUserDefaults standardUserDefaults] setObject:dictionary forKey:TEMPLATE_MESSAGES];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 
 +(NSMutableDictionary*) getTemplateMessages{
-    
+
     return [[NSUserDefaults standardUserDefaults] objectForKey:TEMPLATE_MESSAGES];
 }
 
@@ -1080,6 +1146,11 @@
 
 +(BOOL) isAttachmentButtonHidden{
     return ([[self getHideAttachmentsOption] containsObject:@":attachmentbutton"]);
+}
+
++(BOOL) isDocumentOptionHidden{
+
+    return ([[self getHideAttachmentsOption] containsObject:@":document"]);
 }
 
 +(BOOL)isS3StorageServiceEnabled
@@ -1174,7 +1245,7 @@
 +(void)setCategoryName:(NSString*)categoryName{
     [[NSUserDefaults standardUserDefaults] setValue:categoryName forKey:AL_CATEGORY_NAME];
     [[NSUserDefaults standardUserDefaults] synchronize];
-    
+
 }
 /**
  SERVICE HEREOES CODE
@@ -1211,6 +1282,158 @@
     return [[NSUserDefaults standardUserDefaults] boolForKey:CHANNEL_MEMBER_INFO_IN_SUBTITLE];
 }
 
++(UIColor *) getTabBarBackgroundColour{
+    NSData *colorData = [[NSUserDefaults standardUserDefaults] objectForKey:TABBAR_BACKGROUND_COLOUR];
+    UIColor *color = [NSKeyedUnarchiver unarchiveObjectWithData:colorData];
+    return color ? color : [UIColor colorWithRed:247.0/255 green:247.0/255 blue:247.0/255 alpha:0.5];
+}
++(void) setTabBarBackgroundColour:(UIColor *)color{
+    NSData * colorData = [NSKeyedArchiver archivedDataWithRootObject:color];
+    [[NSUserDefaults standardUserDefaults] setObject:colorData forKey:TABBAR_BACKGROUND_COLOUR];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
++(UIColor *) getTabBarSelectedItemColour{
+    NSData *colorData = [[NSUserDefaults standardUserDefaults] objectForKey:TABBAR_SELECTED_ITEM_COLOUR];
+    UIColor *color = [NSKeyedUnarchiver unarchiveObjectWithData:colorData];
+    return color ? color : [UIColor blueColor];
+}
++(void) setTabBarSelectedItemColour:(UIColor *)color{
+    NSData * colorData = [NSKeyedArchiver archivedDataWithRootObject:color];
+    [[NSUserDefaults standardUserDefaults] setObject:colorData forKey:TABBAR_SELECTED_ITEM_COLOUR];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
++(UIColor *) getTabBarUnSelectedItemColour{
+    NSData *colorData = [[NSUserDefaults standardUserDefaults] objectForKey:TABBAR_UNSELECTED_ITEM_COLOUR];
+    UIColor *color = [NSKeyedUnarchiver unarchiveObjectWithData:colorData];
+    return color ? color : [UIColor grayColor];
+}
++(void) setTabBarUnSelectedItemColour:(UIColor *)color{
+    NSData * colorData = [NSKeyedArchiver archivedDataWithRootObject:color];
+    [[NSUserDefaults standardUserDefaults] setObject:colorData forKey:TABBAR_UNSELECTED_ITEM_COLOUR];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
++(UIColor *) getAttachmentIconColour{
+    NSData *colorData = [[NSUserDefaults standardUserDefaults] objectForKey:ATTACHMENT_ITEM_COLOUR];
+    UIColor *color = [NSKeyedUnarchiver unarchiveObjectWithData:colorData];
+    return color ? color : [UIColor grayColor];
+}
++(void) setAttachmentIconColour:(UIColor *)color{
+    NSData * colorData = [NSKeyedArchiver archivedDataWithRootObject:color];
+    [[NSUserDefaults standardUserDefaults] setObject:colorData forKey:ATTACHMENT_ITEM_COLOUR];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
++(UIColor *) getSendIconColour{
+    NSData *colorData = [[NSUserDefaults standardUserDefaults] objectForKey:SEND_ITEM_COLOUR];
+    UIColor *color = [NSKeyedUnarchiver unarchiveObjectWithData:colorData];
+    return color ? color : [UIColor whiteColor];
+}
++(void) setSendIconColour:(UIColor *)color{
+    NSData * colorData = [NSKeyedArchiver archivedDataWithRootObject:color];
+    [[NSUserDefaults standardUserDefaults] setObject:colorData forKey:SEND_ITEM_COLOUR];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
++(UIColor *) getMessageSubtextColour{
+    NSData *colorData = [[NSUserDefaults standardUserDefaults] objectForKey:MESSAGE_SUBTEXT_COLOUR];
+    UIColor *color = [NSKeyedUnarchiver unarchiveObjectWithData:colorData];
+    return color ? color : [UIColor colorWithRed:144.0/255 green:144.0/255 blue:144.00/255 alpha:1.0];
+}
++(void) setMessageSubtextColour:(UIColor *)color{
+    NSData * colorData = [NSKeyedArchiver archivedDataWithRootObject:color];
+    [[NSUserDefaults standardUserDefaults] setObject:colorData forKey:MESSAGE_SUBTEXT_COLOUR];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
++(UIColor *) getMessageListTextColor{
+    NSData *colorData = [[NSUserDefaults standardUserDefaults] objectForKey:MESSAGE_TEXT_COLOUR];
+    UIColor *color = [NSKeyedUnarchiver unarchiveObjectWithData:colorData];
+    return color ? color : [UIColor colorWithRed:107.0/255 green:107.0/255 blue:107.0/255 alpha:1.0];
+}
++(void) setMessageListTextColor:(UIColor *)color{
+    NSData * colorData = [NSKeyedArchiver archivedDataWithRootObject:color];
+    [[NSUserDefaults standardUserDefaults] setObject:colorData forKey:MESSAGE_TEXT_COLOUR];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
++(UIColor *) getProfileMainColour{
+    NSData *colorData = [[NSUserDefaults standardUserDefaults] objectForKey:PROFILE_MAIN_COLOUR];
+    UIColor *color = [NSKeyedUnarchiver unarchiveObjectWithData:colorData];
+    return color ? color : [UIColor colorWithRed:0.00 green:0.48 blue:1.00 alpha:1.0];
+}
++(void) setProfileMainColour:(UIColor *)color{
+    NSData * colorData = [NSKeyedArchiver archivedDataWithRootObject:color];
+    [[NSUserDefaults standardUserDefaults] setObject:colorData forKey:PROFILE_MAIN_COLOUR];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
++(UIColor *) getProfileSubColour{
+    NSData *colorData = [[NSUserDefaults standardUserDefaults] objectForKey:PROFILE_SUB_COLOUR];
+    UIColor *color = [NSKeyedUnarchiver unarchiveObjectWithData:colorData];
+    return color ? color : [UIColor colorWithRed:0.93 green:0.98 blue:1.00 alpha:1.0];
+}
++(void) setProfileSubColour:(UIColor *)color{
+    NSData * colorData = [NSKeyedArchiver archivedDataWithRootObject:color];
+    [[NSUserDefaults standardUserDefaults] setObject:colorData forKey:PROFILE_SUB_COLOUR];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
++(UIColor *) getNewContactMainColour{
+    NSData *colorData = [[NSUserDefaults standardUserDefaults] objectForKey:NEW_CONTACT_MAIN_COLOUR];
+    UIColor *color = [NSKeyedUnarchiver unarchiveObjectWithData:colorData];
+    return color ? color : [UIColor colorWithRed:0.00 green:0.48 blue:1.00 alpha:1.0];
+}
++(void) setNewContactMainColour:(UIColor *)color{
+    NSData * colorData = [NSKeyedArchiver archivedDataWithRootObject:color];
+    [[NSUserDefaults standardUserDefaults] setObject:colorData forKey:NEW_CONTACT_MAIN_COLOUR];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
++(UIColor *) getNewContactSubColour{
+    NSData *colorData = [[NSUserDefaults standardUserDefaults] objectForKey:NEW_CONTACT_SUB_COLOUR];
+    UIColor *color = [NSKeyedUnarchiver unarchiveObjectWithData:colorData];
+    return color ? color : [UIColor whiteColor];
+}
++(void) setNewContactSubColour:(UIColor *)color{
+    NSData * colorData = [NSKeyedArchiver archivedDataWithRootObject:color];
+    [[NSUserDefaults standardUserDefaults] setObject:colorData forKey:NEW_CONTACT_SUB_COLOUR];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
++(UIColor *) getNewContactTextColour{
+    NSData *colorData = [[NSUserDefaults standardUserDefaults] objectForKey:NEW_CONTACT_TEXT_COLOUR];
+    UIColor *color = [NSKeyedUnarchiver unarchiveObjectWithData:colorData];
+    return color ? color : nil;
+}
++(void) setNewContactTextColour:(UIColor *)color{
+    NSData * colorData = [NSKeyedArchiver archivedDataWithRootObject:color];
+    [[NSUserDefaults standardUserDefaults] setObject:colorData forKey:NEW_CONTACT_TEXT_COLOUR];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
++(UIColor *) getSearchBarTintColour{
+    NSData *colorData = [[NSUserDefaults standardUserDefaults] objectForKey:SEARCHBAR_TINT_COLOUR];
+    UIColor *color = [NSKeyedUnarchiver unarchiveObjectWithData:colorData];
+    return color ? color : nil;
+}
++(void) setSearchBarTintColour:(UIColor *)color{
+    NSData * colorData = [NSKeyedArchiver archivedDataWithRootObject:color];
+    [[NSUserDefaults standardUserDefaults] setObject:colorData forKey:SEARCHBAR_TINT_COLOUR];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
++(UIColor *) getMessagesViewBackgroundColour{
+    NSData *colorData = [[NSUserDefaults standardUserDefaults] objectForKey:MESSAGES_VIEW_BG_COLOUR];
+    UIColor *color = [NSKeyedUnarchiver unarchiveObjectWithData:colorData];
+    return color ? color : [UIColor whiteColor];
+}
++(void) setMessagesViewBackgroundColour:(UIColor *)color{
+    NSData * colorData = [NSKeyedArchiver archivedDataWithRootObject:color];
+    [[NSUserDefaults standardUserDefaults] setObject:colorData forKey:MESSAGES_VIEW_BG_COLOUR];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++(UIColor *) getChatViewControllerBackgroundColor{
+    NSData *colorData = [[NSUserDefaults standardUserDefaults] objectForKey:CHAT_VIEW_BG_COLOUR];
+    UIColor *color = [NSKeyedUnarchiver unarchiveObjectWithData:colorData];
+    return color ? color : [UIColor colorWithRed:242.0/255 green:242.0/255 blue:242.0/255 alpha:1.0];
+}
++(void) setChatViewControllerBackgroundColor:(UIColor *)color{
+    NSData * colorData = [NSKeyedArchiver archivedDataWithRootObject:color];
+    [[NSUserDefaults standardUserDefaults] setObject:colorData forKey:CHAT_VIEW_BG_COLOUR];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
 +(void)showChannelMembersInfoInNavigationBar:(BOOL)flag
 {
     [[NSUserDefaults standardUserDefaults] setBool:flag forKey:CHANNEL_MEMBER_INFO_IN_SUBTITLE];
@@ -1230,12 +1453,173 @@
 
 +(BOOL)isMultiSelectGalleryViewDisabled
 {
-    return [[NSUserDefaults standardUserDefaults] objectForKey:ALDisableMultiSelectGalleryView];
+    return [[NSUserDefaults standardUserDefaults] boolForKey:ALDisableMultiSelectGalleryView];
 }
 +(void)disableMultiSelectGalleryView:(BOOL)enabled
 {
     [[NSUserDefaults standardUserDefaults] setBool:enabled forKey:ALDisableMultiSelectGalleryView];
     [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++(BOOL)is5MinVideoLimitInGalleryEnabled
+{
+    return [[NSUserDefaults standardUserDefaults] boolForKey:AL_5MIN_VIDEO_LIMIT_IN_GALLERY];
+}
++(void)enable5MinVideoLimitInGallery:(BOOL)enabled
+{
+    [[NSUserDefaults standardUserDefaults] setBool:enabled forKey:AL_5MIN_VIDEO_LIMIT_IN_GALLERY];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++(void)setBackgroundColorForAttachmentPlusIcon:(UIColor *)backgroundColor
+{
+    NSData *backgroundColorData = [NSKeyedArchiver archivedDataWithRootObject:backgroundColor];
+    [[NSUserDefaults standardUserDefaults] setObject:backgroundColorData forKey:BACKGROUND_COLOR_FOR_ATTACHMENT_PLUS_ICON];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++(UIColor *)getBackgroundColorForAttachmentPlusIcon
+{
+    NSData *backgroundColorData = [[NSUserDefaults standardUserDefaults] objectForKey:BACKGROUND_COLOR_FOR_ATTACHMENT_PLUS_ICON];
+    UIColor *backgroundColor = [NSKeyedUnarchiver unarchiveObjectWithData:backgroundColorData];
+    return backgroundColor;
+}
+
++(void) clearAll
+{
+    NSDictionary * dictionary = [[NSUserDefaults standardUserDefaults] dictionaryRepresentation];
+    NSArray * keyArray = [dictionary allKeys];
+    for(NSString * defaultKeyString in keyArray)
+    {
+        if([defaultKeyString hasPrefix:@"com.applozic"] && ![defaultKeyString isEqualToString:APN_DEVICE_TOKEN])
+        {
+            [[NSUserDefaults standardUserDefaults] removeObjectForKey:defaultKeyString];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+        }
+    }
+}
+
++(BOOL)isTextStyleInCellEnabled
+{
+    return [[NSUserDefaults standardUserDefaults] boolForKey:AL_TEXT_STYLE_FOR_CELL];
+}
+
++(void)enableTextStyleCell:(BOOL)flag
+{
+    [[NSUserDefaults standardUserDefaults] setBool:flag forKey:AL_TEXT_STYLE_FOR_CELL];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++(void)setChatCellTextFontSize:(float)fontSize
+{
+    [[NSUserDefaults standardUserDefaults] setFloat:fontSize forKey:AL_CHAT_CELL_FONT_SIZE];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++(float)getChatCellTextFontSize
+{
+    float size = [[NSUserDefaults standardUserDefaults] floatForKey:AL_CHAT_CELL_FONT_SIZE];
+    return size ? size : 14;
+}
+
++(void)setChannelCellTextFontSize:(float)fontSize
+{
+    [[NSUserDefaults standardUserDefaults] setFloat:fontSize forKey:AL_CHANNEL_CELL_FONT_SIZE];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++(float)getChannelCellTextFontSize
+{
+    float size = [[NSUserDefaults standardUserDefaults] floatForKey:AL_CHANNEL_CELL_FONT_SIZE];
+    return size ? size : 14;
+}
+
++(void)setBackgroundColorForAudioRecordingView:(UIColor *)backgroundColor {
+    NSData *backgroundColorData = [NSKeyedArchiver archivedDataWithRootObject:backgroundColor];
+    [[NSUserDefaults standardUserDefaults] setObject:backgroundColorData forKey:AUDIO_RECORDING_VIEW_BACKGROUND_COLOR];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
++(UIColor *)getBackgroundColorForAudioRecordingView {
+    NSData *backgroundColorData = [[NSUserDefaults standardUserDefaults] objectForKey:AUDIO_RECORDING_VIEW_BACKGROUND_COLOR];
+    UIColor *backgroundColor = [NSKeyedUnarchiver unarchiveObjectWithData:backgroundColorData];
+    return backgroundColor ? backgroundColor : [UIColor lightGrayColor];
+}
+
++(void)setColorForSlideToCancelText:(UIColor *)color {
+    NSData *textColorData = [NSKeyedArchiver archivedDataWithRootObject:color];
+    [[NSUserDefaults standardUserDefaults] setObject:textColorData forKey:SLIDE_TO_CANCEL_TEXT_COLOR];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
++(UIColor *)getColorForSlideToCancelText {
+    NSData *textColorData = [[NSUserDefaults standardUserDefaults] objectForKey:SLIDE_TO_CANCEL_TEXT_COLOR];
+    UIColor *textColor = [NSKeyedUnarchiver unarchiveObjectWithData:textColorData];
+    return textColor ? textColor : [UIColor darkGrayColor];
+}
+
++(void)setColorForAudioRecordingText:(UIColor *)color {
+    NSData *textColorData = [NSKeyedArchiver archivedDataWithRootObject:color];
+    [[NSUserDefaults standardUserDefaults] setObject:textColorData forKey:AUDIO_RECORDING_TEXT_COLOR];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
++(UIColor *)getColorForAudioRecordingText {
+    NSData *textColorData = [[NSUserDefaults standardUserDefaults] objectForKey:AUDIO_RECORDING_TEXT_COLOR];
+    UIColor *textColor = [NSKeyedUnarchiver unarchiveObjectWithData:textColorData];
+    return textColor ? textColor : [UIColor redColor];
+}
+
++(void)setFontForAudioView:(NSString *)font {
+    [[NSUserDefaults standardUserDefaults] setValue:font forKey:AUDIO_RECORD_VIEW_FONT];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
++(NSString *)getFontForAudioView {
+    NSString * font = [[NSUserDefaults standardUserDefaults] valueForKey:AUDIO_RECORD_VIEW_FONT];
+    return font ? font : @"Helvetica";
+}
+
++ (void)enableNewAudioDesign:(BOOL)enable {
+    [[NSUserDefaults standardUserDefaults] setBool:enable forKey:ENABLE_NEW_AUDIO_DESIGN];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++ (BOOL)isNewAudioDesignEnabled {
+    return [[NSUserDefaults standardUserDefaults] boolForKey:ENABLE_NEW_AUDIO_DESIGN];
+}
+
++(void)setBackgroundColorForReplyView:(UIColor *)backgroudColor
+{
+    NSData *receiveColorData = [NSKeyedArchiver archivedDataWithRootObject:backgroudColor];
+    [[NSUserDefaults standardUserDefaults] setObject:receiveColorData forKey:AL_BACKGROUND_COLOR_FOR_REPLY_VIEW];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++(UIColor *)getBackgroundColorForReplyView
+{
+    NSData *sendColorData = [[NSUserDefaults standardUserDefaults] objectForKey:AL_BACKGROUND_COLOR_FOR_REPLY_VIEW];
+    UIColor *backgroundColor = [NSKeyedUnarchiver unarchiveObjectWithData:sendColorData];
+    if(backgroundColor)
+    {
+        return backgroundColor;
+    }
+    return [UIColor grayColor];
+  
+}
+
++(void) setHideMediaSelectOption:(NSMutableArray*)array{
+
+    [[NSUserDefaults standardUserDefaults] setObject:array forKey:MEDIA_SELECT_OPTIONS];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++(NSArray*) getHideMediaSelectOption{
+    return [[NSUserDefaults standardUserDefaults] objectForKey:MEDIA_SELECT_OPTIONS];
+}
+
++(BOOL) imagesHiddenInGallery{
+    return [self getHideMediaSelectOption] && [[self getHideMediaSelectOption] containsObject:@":image"];
+}
+
++(BOOL) videosHiddenInGallery{
+    return [self getHideMediaSelectOption] && [[self getHideMediaSelectOption] containsObject:@":video"];
 }
 
 

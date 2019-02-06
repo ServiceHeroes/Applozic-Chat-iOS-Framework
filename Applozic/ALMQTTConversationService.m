@@ -25,13 +25,42 @@
 @implementation ALMQTTConversationService
 
 /*
- MESSAGE_RECEIVED("APPLOZIC_01"), MESSAGE_SENT("APPLOZIC_02"),
- MESSAGE_SENT_UPDATE("APPLOZIC_03"), MESSAGE_DELIVERED("APPLOZIC_04"),
- MESSAGE_DELETED("APPLOZIC_05"), CONVERSATION_DELETED("APPLOZIC_06"),
- MESSAGE_READ("APPLOZIC_07"), MESSAGE_DELIVERED_AND_READ("APPLOZIC_08"),
- CONVERSATION_READ("APPLOZIC_09"), CONVERSATION_DELIVERED_AND_READ("APPLOZIC_10"),
- USER_CONNECTED("APPLOZIC_11"), USER_DISCONNECTED("APPLOZIC_12"),
- GROUP_DELETED("APPLOZIC_13"), GROUP_LEFT("APPLOZIC_14");
+ Notification types :
+ 
+ MESSAGE_RECEIVED("APPLOZIC_01"),
+ MESSAGE_SENT("APPLOZIC_02"),
+ MESSAGE_SENT_UPDATE("APPLOZIC_03"),
+ MESSAGE_DELIVERED("APPLOZIC_04"),
+ MESSAGE_DELETED("APPLOZIC_05"),
+ CONVERSATION_DELETED("APPLOZIC_06"),
+ MESSAGE_READ("APPLOZIC_07"),
+ MESSAGE_DELIVERED_AND_READ("APPLOZIC_08"),
+ CONVERSATION_READ("APPLOZIC_09"),
+ CONVERSATION_DELIVERED_AND_READ("APPLOZIC_10"),
+ USER_CONNECTED("APPLOZIC_11"),
+ USER_DISCONNECTED("APPLOZIC_12"),
+ GROUP_DELETED("APPLOZIC_13"),
+ GROUP_LEFT("APPLOZIC_14"),
+ GROUP_SYNC("APPLOZIC_15"),
+ USER_BLOCKED("APPLOZIC_16"),
+ USER_UN_BLOCKED("APPLOZIC_17"),
+ ACTIVATED("APPLOZIC_18"),
+ DEACTIVATED("APPLOZIC_19"),
+ REGISTRATION("APPLOZIC_20"),
+ GROUP_CONVERSATION_READ("APPLOZIC_21"),
+ GROUP_MESSAGE_DELETED("APPLOZIC_22"),
+ GROUP_CONVERSATION_DELETED("APPLOZIC_23"),
+ APPLOZIC_TEST("APPLOZIC_24"),
+ USER_ONLINE_STATUS("APPLOZIC_25"),
+ CONTACT_SYNC("APPLOZIC_26"),
+ CONVERSATION_DELETED_NEW("APPLOZIC_27"),
+ CONVERSATION_DELIVERED_AND_READ_NEW("APPLOZIC_28"),
+ CONVERSATION_READ_NEW("APPLOZIC_29"),
+ USER_DETAIL_CHANGED("APPLOZIC_30"),
+ MESSAGE_METADATA_UPDATE("APPLOZIC_33"),
+ USER_DELETE_NOTIFICATION("APPLOZIC_34"),
+ USER_MUTE_NOTIFICATION("APPLOZIC_37");
+
  */
 
 +(ALMQTTConversationService *)sharedInstance
@@ -45,10 +74,25 @@
     return sharedInstance;
 }
 
+-(NSString *) getNotificationObjectFromMessage:(ALMessage *) message
+{
+    if (message.groupId != nil) {
+        return [NSString stringWithFormat:@"AL_GROUP:%@:%@",message.groupId.stringValue,message.contactIds];
+    } else if (message.conversationId != nil) {
+        return [NSString stringWithFormat:@"%@:%@",message.contactIds,message.conversationId.stringValue];
+    } else {
+        return [[NSString alloc] initWithString:message.contactIds];
+    }
+}
+
 -(void) subscribeToConversation {
+    [self subscribeToConversationWithTopic:[ALUserDefaultsHandler getUserKeyString]];
+}
 
+-(void) subscribeToConversationWithTopic:(NSString *) topic {
+    
     dispatch_async(dispatch_get_main_queue (),^{
-
+        
         @try
         {
             if (![ALUserDefaultsHandler isLoggedIn]) {
@@ -59,21 +103,21 @@
                 return;
             }
             ALSLog(ALLoggerSeverityInfo, @"MQTT : CONNECTING_MQTT_SERVER");
-
+            
             self.session = [[MQTTSession alloc] initWithClientId:[NSString stringWithFormat:@"%@-%f",
                                                                   [ALUserDefaultsHandler getUserKeyString],fmod([[NSDate date] timeIntervalSince1970], 10.0)]];
-
+            
             NSString * willMsg = [NSString stringWithFormat:@"%@,%@,%@",[ALUserDefaultsHandler getUserKeyString],[ALUserDefaultsHandler getDeviceKeyString],@"0"];
-
+            
             self.session.willFlag = YES;
             self.session.willTopic = MQTT_TOPIC_STATUS;
             self.session.willMsg = [willMsg dataUsingEncoding:NSUTF8StringEncoding];
             self.session.willQoS = MQTTQosLevelAtMostOnce;
             [self.session setDelegate:self];
             ALSLog(ALLoggerSeverityInfo, @"MQTT : WAITING_FOR_CONNECT...");
-
+            
             [self.session connectToHost:MQTT_URL port:[MQTT_PORT intValue] withConnectionHandler:^(MQTTSessionEvent event) {
-
+                
                 if (event == MQTTSessionEventConnected)
                 {
                     ALSLog(ALLoggerSeverityInfo, @"MQTT : CONNECTED");
@@ -82,12 +126,12 @@
                                              onTopic:MQTT_TOPIC_STATUS
                                               retain:NO
                                                  qos:MQTTQosLevelAtMostOnce];
-
+                    
                     ALSLog(ALLoggerSeverityInfo, @"MQTT : SUBSCRIBING TO CONVERSATION TOPICS");
                     if([ALUserDefaultsHandler getEnableEncryption] && [ALUserDefaultsHandler getUserEncryptionKey] ){
-                        [self.session subscribeToTopic:[NSString stringWithFormat:@"%@%@",MQTT_ENCRYPTION_SUB_KEY,[ALUserDefaultsHandler getUserKeyString]] atLevel:MQTTQosLevelAtMostOnce];
+                        [self.session subscribeToTopic:[NSString stringWithFormat:@"%@%@",MQTT_ENCRYPTION_SUB_KEY, topic] atLevel:MQTTQosLevelAtMostOnce];
                     }else{
-                        [self.session subscribeToTopic:[ALUserDefaultsHandler getUserKeyString] atLevel:MQTTQosLevelAtMostOnce];
+                        [self.session subscribeToTopic: topic atLevel:MQTTQosLevelAtMostOnce];
                     }
                     [self.session subscribeToTopic:[NSString stringWithFormat:@"typing-%@-%@", [ALUserDefaultsHandler getApplicationKey], [ALUserDefaultsHandler getUserId]] atLevel:MQTTQosLevelAtMostOnce];
                     [ALUserDefaultsHandler setLoggedInUserSubscribedMQTT:YES];
@@ -97,9 +141,9 @@
                     }
                 }
             } messageHandler:^(NSData *data, NSString *topic) {
-
+                
             }];
-
+            
             /*if (session.status == MQTTSessionStatusConnected) {
              [session subscribeToTopic:[ALUserDefaultsHandler getUserKeyString] atLevel:MQTTQosLevelAtMostOnce];
              }*/
@@ -109,7 +153,6 @@
         }
     });
 }
-
 
 - (void)session:(MQTTSession*)session newMessage:(NSData*)data onTopic:(NSString*)topic {
     ALSLog(ALLoggerSeverityInfo, @"MQTT: GOT_NEW_MESSAGE");
@@ -145,7 +188,6 @@
     ALSLog(ALLoggerSeverityInfo, @"MQTT_NOTIFICATION_TYPE :: %@",type);
     NSString *notificationId = (NSString* )[theMessageDict valueForKey:@"id"];
 
-    ALPushAssist *top = [[ALPushAssist alloc] init];
     if([[UIApplication sharedApplication] applicationState] == UIApplicationStateBackground )
     {
         ALSLog(ALLoggerSeverityInfo, @"Returing coz Application State is Background OR Our View is NOT on Top");
@@ -185,7 +227,7 @@
             {
                 NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
                 [dict setObject:[alMessage getNotificationText] forKey:@"alertValue"];
-                [dict setObject:[NSNumber numberWithInt:APP_STATE_BACKGROUND] forKey:@"updateUI"];
+                [dict setObject:[NSNumber numberWithInt:APP_STATE_ACTIVE] forKey:@"updateUI"];
 
                 if(alMessage.groupId){
                     ALChannelService *channelService = [[ALChannelService alloc] init];
@@ -197,15 +239,15 @@
                                 return;
                             }
 
-                            [ALMessageService addOpenGroupMessage:alMessage];
+                            [ALMessageService addOpenGroupMessage:alMessage withDelegate:self.realTimeUpdate];
                             if(!assistant.isOurViewOnTop)
                             {
-                                [assistant assist:alMessage.contactIds and:dict ofUser:alMessage.contactIds];
+                                [assistant assist:[self getNotificationObjectFromMessage:alMessage] and:dict ofUser:alMessage.contactIds];
                                 [dict setObject:@"mqtt" forKey:@"Calledfrom"];
                             }
                             else
                             {
-                                [self.alSyncCallService syncCall:alMessage];
+                                [self.alSyncCallService syncCall:alMessage withDelegate:self.realTimeUpdate];
                                 [self.mqttConversationDelegate syncCall:alMessage andMessageList:nil];
                             }
                         }else{
@@ -291,7 +333,7 @@
             [self.alSyncCallService updateDeliveryStatusForContact: contactId withStatus:DELIVERED_AND_READ];
             [self.mqttConversationDelegate updateStatusForContact:contactId withStatus:DELIVERED_AND_READ];
             if(self.realTimeUpdate){
-                [self.realTimeUpdate onConversationRead:contactId];
+                [self.realTimeUpdate onAllMessagesRead:contactId];
             }
         }
         else if ([type isEqualToString:@"USER_CONNECTED"]||[type isEqualToString: @"APPLOZIC_11"])
@@ -379,6 +421,40 @@
         else if ([type isEqualToString:@"APPLOZIC_32"])
         {
             // BROADCAST MESSAGE : MESSAGE_DELIVERED_AND_READ
+        }
+        else if([type isEqualToString:@"APPLOZIC_09"]){
+            //Conversation read for user
+            ALUserService *channelService = [[ALUserService alloc]init];
+            NSString * userId = [theMessageDict objectForKey:@"message"];
+            [channelService updateConversationReadWithUserId:userId withDelegate:self.realTimeUpdate];
+            
+        }
+        else if([type isEqualToString:@"APPLOZIC_21"]){
+            //Conversation read for channel
+             ALChannelService *channelService = [[ALChannelService alloc]init];
+             NSNumber * channelKey  = [NSNumber numberWithInt:[[theMessageDict objectForKey:@"message"] intValue]];
+            [channelService updateConversationReadWithGroupId:channelKey withDelegate:self.realTimeUpdate];
+        }
+        
+        else if([type isEqualToString:@"APPLOZIC_37"]){
+            
+            NSArray *parts = [[theMessageDict objectForKey:@"message"] componentsSeparatedByString:@":"];
+            NSString * userId = parts[0];
+            NSString * flag = parts[1];
+            ALContactDBService *contactDataBaseService = [[ALContactDBService alloc] init];
+            
+            if([flag isEqualToString:@"0"]){
+                ALUserDetail *userDetail =  [contactDataBaseService updateMuteAfterTime:0 andUserId:userId];
+                if(self.realTimeUpdate){
+                    [self.realTimeUpdate onUserMuteStatus:userDetail];
+                }
+                
+            }else if([flag isEqualToString:@"1"]) {
+                ALUserService *userService = [[ALUserService alloc]init];
+                [userService getMutedUserListWithDelegate:self.realTimeUpdate withCompletion:^(NSMutableArray *userDetailArray, NSError *error) {
+                    
+                }];
+            }
         }
         else
         {
@@ -474,26 +550,33 @@
     [self unsubscribeToConversation: userKey];
 }
 
--(void) unsubscribeToConversation: (NSString *) userKey
+-(BOOL) unsubscribeToConversation: (NSString *) userKey
 {
-    dispatch_async(dispatch_get_main_queue(), ^{
+    return [self unsubscribeToConversationForUser: userKey WithTopic: [ALUserDefaultsHandler getUserKeyString]];
+}
 
-        if (self.session == nil) {
-            return;
-        }
-        [self.session publishAndWaitData:[[NSString stringWithFormat:@"%@,%@,%@",userKey, [ALUserDefaultsHandler getDeviceKeyString], @"0"] dataUsingEncoding:NSUTF8StringEncoding]
-                                 onTopic:MQTT_TOPIC_STATUS
-                                  retain:NO
-                                     qos:MQTTQosLevelAtMostOnce];
-        if([ALUserDefaultsHandler getEnableEncryption] && [ALUserDefaultsHandler getUserEncryptionKey] ){
-            [self.session unsubscribeTopic:[NSString stringWithFormat:@"%@%@",MQTT_ENCRYPTION_SUB_KEY,[ALUserDefaultsHandler getUserKeyString]]];
-        }else{
-            [self.session unsubscribeTopic:[ALUserDefaultsHandler getUserKeyString]];
-        }
-        [self.session unsubscribeTopic:[NSString stringWithFormat:@"typing-%@-%@", [ALUserDefaultsHandler getApplicationKey], [ALUserDefaultsHandler getUserId]]];
-        [self.session close];
-        ALSLog(ALLoggerSeverityInfo, @"MQTT : DISCONNECTED FROM MQTT");
-    });
+-(void) unsubscribeToConversationWithTopic:(NSString *)topic {
+    NSString *userKey = [ALUserDefaultsHandler getUserKeyString];
+    [self unsubscribeToConversationForUser: userKey WithTopic: topic];
+}
+
+-(BOOL) unsubscribeToConversationForUser:(NSString *) userKey WithTopic:(NSString *)topic {
+    if (self.session == nil) {
+        return NO;
+    }
+    [self.session publishAndWaitData:[[NSString stringWithFormat:@"%@,%@,%@",userKey, [ALUserDefaultsHandler getDeviceKeyString], @"0"] dataUsingEncoding:NSUTF8StringEncoding]
+                             onTopic:MQTT_TOPIC_STATUS
+                              retain:NO
+                                 qos:MQTTQosLevelAtMostOnce];
+    if([ALUserDefaultsHandler getEnableEncryption] && [ALUserDefaultsHandler getUserEncryptionKey] ){
+        [self.session unsubscribeTopic:[NSString stringWithFormat:@"%@%@",MQTT_ENCRYPTION_SUB_KEY, topic]];
+    }else{
+        [self.session unsubscribeTopic: topic];
+    }
+    [self.session unsubscribeTopic:[NSString stringWithFormat:@"typing-%@-%@", [ALUserDefaultsHandler getApplicationKey], [ALUserDefaultsHandler getUserId]]];
+    [self.session close];
+    ALSLog(ALLoggerSeverityInfo, @"MQTT : DISCONNECTED FROM MQTT");
+    return YES;
 }
 
 -(void)subscribeToChannelConversation:(NSNumber *)channelKey
@@ -601,7 +684,7 @@
         ALSLog(ALLoggerSeverityInfo, @"ALMQTTConversationService SYNC CALL");
         if(!assistant.isOurViewOnTop)
         {
-            [assistant assist:alMessage.contactIds and:nsMutableDictionary ofUser:alMessage.contactIds];
+            [assistant assist:[self getNotificationObjectFromMessage:alMessage] and:nsMutableDictionary ofUser:alMessage.contactIds];
             [nsMutableDictionary setObject:@"mqtt" forKey:@"Calledfrom"];
         }
         else

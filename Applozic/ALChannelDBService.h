@@ -15,6 +15,7 @@
 #import "ALConversationProxy.h"
 #import "DB_ConversationProxy.h"
 #import "ALApplozicSettings.h"
+#import "ALRealTimeUpdate.h"
 
 @interface ALChannelDBService : NSObject
 
@@ -25,10 +26,6 @@
 -(void)insertChannel:(NSMutableArray *)channelList;
 
 -(DB_CHANNEL *) createChannelEntity:(ALChannel *)channel;
-
--(void)insertChannelUserX:(NSMutableArray *)channelUserX;
-
--(DB_CHANNEL_USER_X *)createChannelUserXEntity:(ALChannelUserX *)channelUserXList;
 
 -(NSMutableArray *)getChannelMembersList:(NSNumber *)channelKey;
 
@@ -50,7 +47,7 @@
 
 -(void)updateChannelMetaData:(NSNumber *)channelKey metaData:(NSMutableDictionary *)newMetaData;
 
--(void)processArrayAfterSyncCall:(NSMutableArray *)channelArray;
+-(void)createChannelsAndUpdateInfo:(NSMutableArray *)channelArray withDelegate:(id<ApplozicUpdatesDelegate>)delegate;
 
 -(NSMutableArray *)getListOfAllUsersInChannel:(NSNumber *)key;
 //New Added...
@@ -67,11 +64,13 @@
 -(BOOL)isChannelDeleted:(NSNumber *)groupId;
 -(BOOL)isConversaionClosed:(NSNumber *)groupId;
 
+-(BOOL)isAdminBroadcastChannel:(NSNumber *)groupId;
+
 -(void) updateChannelParentKey:(NSNumber *)channelKey
               andWithParentKey:(NSNumber *)channelParentKey isAdding:(BOOL)flag;
 
 -(void)updateClientChannelParentKey:(NSString *)clientChildKey
-                   andWithClientParentKey:(NSString *)clientParentKey isAdding:(BOOL)flag;
+             andWithClientParentKey:(NSString *)clientParentKey isAdding:(BOOL)flag;
 
 -(NSNumber *)getOverallUnreadCountForChannelFromDB;
 
@@ -84,7 +83,6 @@
 -(NSMutableArray *)fetchChildChannels:(NSNumber *)parentGroupKey;
 
 -(void)updateMuteAfterTime:(NSNumber*)notificationAfterTime andChnnelKey:(NSNumber*)channelKey;
-
 
 -(DB_CHANNEL_USER_X *)getChannelUserX:(NSNumber *)channelKey;
 
@@ -101,5 +99,10 @@
 -(NSMutableArray *)getListOfAllUsersInChannelByNameForContactsGroup:(NSString *)channelName;
 
 -(DB_CHANNEL *)getContactsGroupChannelByName:(NSString *)channelName;
+-(NSMutableArray *) getGroupUsersInChannel:(NSNumber *)key;
+
+-(void)saveDataInBackgroundWithContext:(NSManagedObjectContext *) nsContext withChannel:(ALChannel *)channel;
+
+-(DB_CHANNEL_USER_X *)getChannelUserXByUserId:(NSNumber *)channelKey andUserId:(NSString *) userId;
 
 @end

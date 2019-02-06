@@ -8,7 +8,11 @@
 #import "ALMessage.h"
 #import "ALUtilityClass.h"
 #import "ALAudioVideoBaseVC.h"
-
+#import "ALChannel.h"
+#import "ALContact.h"
+#import "ALChannelService.h"
+#import "ALContactDBService.h"
+#import "ALUserDefaultsHandler.h"
 
 @implementation ALMessage
 
@@ -383,6 +387,16 @@
 
 }
 
+-(BOOL)isLinkMessage
+{
+    return (_metadata && [_metadata  valueForKey:@"linkMessage"] && [ [_metadata  valueForKey:@"linkMessage"] isEqualToString:@"true"]);
+}
+
+-(BOOL)isChannelContentTypeMessage
+{
+    return (self.contentType == ALMESSAGE_CHANNEL_NOTIFICATION);
+}
+
 -(BOOL)isDocumentMessage
 {
     return (self.contentType ==ALMESSAGE_CONTENT_ATTACHMENT) &&
@@ -475,5 +489,35 @@
     return [[ALMessage alloc] initWithBuilder:alMessageBuilder];
 }
 
+-(BOOL)isNotificationDisabled{
+    
+    ALChannel *channel;
+    
+    ALContact *contact;
+    
+    if(self.groupId){
+        
+        ALChannelService *channelService = [[ALChannelService alloc] init];
+        
+        channel =  [channelService getChannelByKey:self.groupId];
+        
+    }else{
+        
+        ALContactDBService *alContactDBService = [[ALContactDBService alloc] init];
+        
+        contact = [alContactDBService loadContactByKey:@"userId" value:self.contactIds];
+        
+    }
+    
+    return (([ALUserDefaultsHandler getNotificationMode] == NOTIFICATION_DISABLE)
+            
+            || (_metadata && ([self isSilentNotification]
+                              
+                              || [self isHiddenMessage]))
+            
+            || (channel && [channel isNotificationMuted])
+            
+            || (contact && [contact isNotificationMuted]));
+}
 
 @end

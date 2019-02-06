@@ -16,6 +16,7 @@
 #import  "MessageListRequest.h"
 #import "ALMessageInfoResponse.h"
 #import "ALMQTTConversationService.h"
+#import "ALRealTimeUpdate.h"
 
 #define NEW_MESSAGE_NOTIFICATION @"newMessageNotification"
 #define CONVERSATION_CALL_COMPLETED @"conversationCallCompleted"
@@ -24,7 +25,11 @@
 
 +(ALMessageService *)sharedInstance;
 
+@property (nonatomic, weak) id<ApplozicUpdatesDelegate> delegate;
+
 +(void) processLatestMessagesGroupByContact;
+
++(void) processLatestMessagesGroupByContactWithCompletion:(void(^)(void))completion;
 
 -(void) getMessageListForUser:(MessageListRequest*)messageListRequest withCompletion:(void(^)(NSMutableArray * messages, NSError * error, NSMutableArray *userDetailArray)) completion;
 
@@ -42,6 +47,8 @@ withAttachmentAtLocation:(NSString *)attachmentLocalPath
 +(void)proessUploadImageForMessage:(ALMessage *)message databaseObj:(DB_FileMetaInfo *)fileMetaInfo uploadURL:(NSString *)uploadURL withdelegate:(id)delegate;
 
 +(void) processImageDownloadforMessage:(ALMessage *) message withdelegate:(id)delegate;
+
++(void) processImageDownloadforMessage:(ALMessage *) message withDelegate:(id)delegate withCompletionHandler:(void (^)(NSError *))completion;
 
 +(ALMessage*) processFileUploadSucess: (ALMessage *)message;
 
@@ -83,10 +90,14 @@ withAttachmentAtLocation:(NSString *)attachmentLocalPath
 -(ALMessage *)getALMessageByKey:(NSString*)messageReplyId;
 
 +(void)addBroadcastMessageToDB:(ALMessage *)alMessage;
-+(void)addOpenGroupMessage:(ALMessage*)alMessage;
 +(void)syncMessages;
 +(void) getLatestMessageForUser:(NSString *)deviceKeyString withDelegate : (id<ApplozicUpdatesDelegate>)theDelegate withCompletion:(void (^)( NSMutableArray *, NSError *))completion;
 
 -(void) getLatestMessages:(BOOL)isNextPage withOnlyGroups:(BOOL)isGroup withCompletionHandler: (void(^)(NSMutableArray * messageList, NSError *error)) completion;
 
++(void)addOpenGroupMessage:(ALMessage*)alMessage withDelegate:(id<ApplozicUpdatesDelegate>)delegate;
+
+-(ALMessage *)handleMessageFailedStatus:(ALMessage *)message;
+
+-(ALMessage*) getMessageByKey:(NSString*)messageKey;
 @end
